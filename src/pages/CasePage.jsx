@@ -8,18 +8,18 @@ import casesData from '../data/cases.json';
 import { useApp } from '../context/AppContext';
 
 const CATEGORY_COLORS = {
-  'Finance': { bg: 'rgba(56,189,248,0.14)', text: '#38bdf8', border: 'rgba(56,189,248,0.35)' },
-  'E-Commerce': { bg: 'rgba(251,146,60,0.14)', text: '#fb923c', border: 'rgba(251,146,60,0.35)' },
-  'Digital Marketing': { bg: 'rgba(244,63,94,0.14)', text: '#f43f5e', border: 'rgba(244,63,94,0.35)' },
-  'SaaS & Product': { bg: 'rgba(168,85,247,0.14)', text: '#c084fc', border: 'rgba(168,85,247,0.35)' },
-  'Social Media': { bg: 'rgba(236,72,153,0.14)', text: '#f472b6', border: 'rgba(236,72,153,0.35)' },
-  'Healthcare': { bg: 'rgba(52,211,153,0.14)', text: '#34d399', border: 'rgba(52,211,153,0.35)' },
+  'Finance': { bg: '#eff6ff', text: '#1d4ed8', border: '#bfdbfe' },
+  'E-Commerce': { bg: '#fff7ed', text: '#c2410c', border: '#fed7aa' },
+  'Digital Marketing': { bg: '#fdf2f8', text: '#be185d', border: '#fbcfe8' },
+  'SaaS & Product': { bg: '#f5f3ff', text: '#6d28d9', border: '#ddd6fe' },
+  'Social Media': { bg: '#fdf4ff', text: '#a21caf', border: '#f5d0fe' },
+  'Healthcare': { bg: '#ecfdf5', text: '#047857', border: '#a7f3d0' },
 };
 
 export default function CasePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { perspectiveMode, setPerspectiveMode, isDA, modeColor, modeLabel, modeEmoji } = useApp();
+  const { perspectiveMode, setPerspectiveMode, isDA, modeLabel, modeEmoji } = useApp();
 
   const caseData = casesData.find(c => c.id === id) || casesData[0];
   const [activeTab, setActiveTab] = useState('breakdown'); // 'breakdown' | 'markdown'
@@ -40,14 +40,14 @@ export default function CasePage() {
   const nextCase = currentIndex < casesData.length - 1 ? casesData[currentIndex + 1] : null;
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg-base)' }}>
+    <div style={{ minHeight: '100vh', background: '#f8fafc', color: '#0f172a' }}>
 
       {/* ── HEADER ── */}
       <header style={{
         position: 'sticky', top: 0, zIndex: 40,
-        background: 'rgba(7,9,15,0.92)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--color-border)',
+        background: 'rgba(255,255,255,0.95)',
+        backdropFilter: 'blur(8px)',
+        borderBottom: '1px solid #e2e8f0',
         padding: '0.75rem 1rem',
       }}>
         <div style={{
@@ -60,18 +60,15 @@ export default function CasePage() {
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Link to="/generate" className="btn btn-primary" style={{ padding: '6px 14px', fontSize: '0.8rem' }}>
+              ⚡ Generate Kasus Baru
+            </Link>
             <button
               onClick={handleRandomCase}
-              className="btn"
-              style={{
-                padding: '6px 14px',
-                fontSize: '0.8rem',
-                background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
-                color: '#fff',
-                boxShadow: '0 0 14px rgba(236,72,153,0.3)',
-              }}
+              className="btn btn-ghost"
+              style={{ padding: '6px 14px', fontSize: '0.8rem' }}
             >
-              🎲 Acak Studi Kasus Lain
+              🎲 Acak Kasus Lain
             </button>
           </div>
         </div>
@@ -81,11 +78,12 @@ export default function CasePage() {
 
         {/* ── CASE HEADER CARD ── */}
         <div style={{
-          background: 'var(--color-bg-card)',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: 20,
+          background: '#ffffff',
+          border: '1px solid #e2e8f0',
+          borderRadius: 16,
           padding: '1.5rem',
           marginBottom: '1.5rem',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
         }} className="anim-fade-up">
 
           {/* Badges */}
@@ -94,60 +92,51 @@ export default function CasePage() {
               background: catStyle.bg,
               color: catStyle.text,
               border: `1px solid ${catStyle.border}`,
-              padding: '3px 10px',
+              padding: '2px 9px',
               borderRadius: 99,
               fontSize: '0.74rem',
               fontWeight: 800,
-              letterSpacing: '0.04em',
             }}>
               🏷️ Kategori: {caseData.category}
             </span>
             <span style={{
-              background: 'var(--color-bg-raised)',
-              border: '1px solid var(--color-border)',
-              color: 'var(--color-text-3)',
-              padding: '3px 10px',
+              background: '#f1f5f9',
+              border: '1px solid #e2e8f0',
+              color: '#475569',
+              padding: '2px 9px',
               borderRadius: 99,
               fontSize: '0.74rem',
               fontWeight: 700,
             }}>
               📊 {caseData.chartType.toUpperCase()} Chart
             </span>
-            <span style={{
-              background: 'rgba(52,211,153,0.12)',
-              border: '1px solid rgba(52,211,153,0.3)',
-              color: '#34d399',
-              padding: '3px 10px',
-              borderRadius: 99,
-              fontSize: '0.74rem',
-              fontWeight: 700,
-            }}>
+            <span className="pill pill-green">
               💡 Kunjaw & Reasoning Siap
             </span>
           </div>
 
           {/* Title */}
           <h1 style={{
-            fontSize: 'clamp(1.4rem, 3vw, 1.85rem)',
+            fontSize: 'clamp(1.35rem, 3vw, 1.85rem)',
             fontWeight: 900,
             lineHeight: 1.25,
-            color: 'var(--color-text-1)',
-            marginBottom: 10,
+            color: '#0f172a',
+            marginBottom: 12,
           }}>
             {caseData.title}
           </h1>
 
           {/* Problem Statement Box */}
           <div style={{
-            background: 'var(--color-bg-base)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 14,
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: 12,
             padding: '1rem',
           }}>
-            <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-warning)', marginBottom: 4 }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#d97706', marginBottom: 4 }}>
               ❓ Studi Kasus / Problem Bisnis:
             </div>
-            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.6 }}>
               {caseData.problemStatement}
             </p>
           </div>
@@ -165,16 +154,17 @@ export default function CasePage() {
 
             {/* Interactive Chart */}
             <div style={{
-              background: 'var(--color-bg-card)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 18,
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              borderRadius: 16,
               padding: '1.25rem',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-text-2)' }}>
+                <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0f172a' }}>
                   📈 Visualisasi Data
                 </span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-3)' }}>
+                <span style={{ fontSize: '0.74rem', color: '#64748b' }}>
                   X: {caseData.xLabel} | Y: {caseData.yLabel}
                 </span>
               </div>
@@ -185,33 +175,34 @@ export default function CasePage() {
 
             {/* Quick Answer (Kunjaw Langsung) */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.02))',
-              border: '2px solid rgba(56,189,248,0.4)',
-              borderRadius: 18,
+              background: '#f0f9ff',
+              border: '1px solid #bae6fd',
+              borderRadius: 16,
               padding: '1.25rem',
-              boxShadow: '0 0 20px rgba(56,189,248,0.15)',
+              boxShadow: '0 1px 3px rgba(2,132,199,0.06)',
             }} className="anim-fade-up">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#38bdf8', fontWeight: 800, fontSize: '0.92rem', marginBottom: 6 }}>
-                <span style={{ fontSize: '1.2rem' }}>💡</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#0284c7', fontWeight: 800, fontSize: '0.92rem', marginBottom: 6 }}>
+                <span style={{ fontSize: '1.15rem' }}>💡</span>
                 <span>Kunci Jawaban Cepat (TL;DR)</span>
               </div>
-              <p style={{ fontSize: '0.88rem', color: 'var(--color-text-1)', fontWeight: 600, lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.88rem', color: '#0c4a6e', fontWeight: 600, lineHeight: 1.6 }}>
                 "{caseData.quickAnswer}"
               </p>
             </div>
 
             {/* Detailed Reasoning */}
             <div style={{
-              background: 'var(--color-bg-card)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 18,
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              borderRadius: 16,
               padding: '1.25rem',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-text-1)', fontWeight: 800, fontSize: '0.9rem', marginBottom: 8 }}>
-                <span style={{ fontSize: '1.2rem' }}>🧠</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#0f172a', fontWeight: 800, fontSize: '0.9rem', marginBottom: 8 }}>
+                <span style={{ fontSize: '1.15rem' }}>🧠</span>
                 <span>Kenapa Jawabannya Begitu? (Reasoning)</span>
               </div>
-              <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', lineHeight: 1.65 }}>
+              <p style={{ fontSize: '0.84rem', color: '#334155', lineHeight: 1.65 }}>
                 {caseData.detailedReasoning}
               </p>
             </div>
@@ -219,12 +210,12 @@ export default function CasePage() {
             {/* Navigation to Prev / Next */}
             <div style={{ display: 'flex', gap: 8 }}>
               {prevCase ? (
-                <Link to={`/case/${prevCase.id}`} className="btn btn-ghost" style={{ flex: 1, fontSize: '0.78rem', padding: '10px' }}>
+                <Link to={`/case/${prevCase.id}`} className="btn btn-ghost" style={{ flex: 1, fontSize: '0.78rem', padding: '9px' }}>
                   ← {prevCase.title.slice(0, 24)}...
                 </Link>
               ) : <div style={{ flex: 1 }} />}
               {nextCase ? (
-                <Link to={`/case/${nextCase.id}`} className="btn btn-ghost" style={{ flex: 1, fontSize: '0.78rem', padding: '10px', textAlign: 'right' }}>
+                <Link to={`/case/${nextCase.id}`} className="btn btn-ghost" style={{ flex: 1, fontSize: '0.78rem', padding: '9px', textAlign: 'right' }}>
                   {nextCase.title.slice(0, 24)}... →
                 </Link>
               ) : <div style={{ flex: 1 }} />}
@@ -234,28 +225,28 @@ export default function CasePage() {
           {/* RIGHT COLUMN: Perspective Breakdown + Algorithms + Dos/Donts + Markdown */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
-            {/* Top View Selector: Breakdown Interaktif vs Pemilihan Markdown */}
+            {/* Top View Selector */}
             <div style={{
               display: 'flex',
-              background: 'var(--color-bg-card)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 14,
-              padding: 4,
-              gap: 6,
+              background: '#f1f5f9',
+              border: '1px solid #e2e8f0',
+              borderRadius: 12,
+              padding: 3,
+              gap: 4,
             }}>
               <button
                 onClick={() => setActiveTab('breakdown')}
                 style={{
                   flex: 1,
-                  padding: '9px 12px',
-                  borderRadius: 10,
+                  padding: '8px 12px',
+                  borderRadius: 9,
                   border: 'none',
-                  background: activeTab === 'breakdown' ? 'var(--color-bg-raised)' : 'transparent',
-                  color: activeTab === 'breakdown' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  background: activeTab === 'breakdown' ? '#ffffff' : 'transparent',
+                  color: activeTab === 'breakdown' ? '#0f172a' : '#64748b',
                   fontWeight: 800,
                   fontSize: '0.82rem',
                   cursor: 'pointer',
-                  boxShadow: activeTab === 'breakdown' ? '0 2px 8px rgba(0,0,0,0.3)' : 'none',
+                  boxShadow: activeTab === 'breakdown' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
                 }}
               >
                 🔍 Kunjaw & Analisis Interaktif
@@ -264,15 +255,15 @@ export default function CasePage() {
                 onClick={() => setActiveTab('markdown')}
                 style={{
                   flex: 1,
-                  padding: '9px 12px',
-                  borderRadius: 10,
+                  padding: '8px 12px',
+                  borderRadius: 9,
                   border: 'none',
-                  background: activeTab === 'markdown' ? 'var(--color-bg-raised)' : 'transparent',
-                  color: activeTab === 'markdown' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  background: activeTab === 'markdown' ? '#ffffff' : 'transparent',
+                  color: activeTab === 'markdown' ? '#0f172a' : '#64748b',
                   fontWeight: 800,
                   fontSize: '0.82rem',
                   cursor: 'pointer',
-                  boxShadow: activeTab === 'markdown' ? '0 2px 8px rgba(0,0,0,0.3)' : 'none',
+                  boxShadow: activeTab === 'markdown' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
                 }}
               >
                 📝 Pemilihan Markdown (DA / DS)
@@ -281,105 +272,96 @@ export default function CasePage() {
 
             {activeTab === 'breakdown' ? (
               <>
-                {/* 2 Big Perspective Toggle: Data Analyst vs Data Science */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: 10,
-                }}>
+                {/* 2 Big Perspective Toggle */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                   <button
                     onClick={() => setPerspectiveMode('da')}
                     style={{
-                      padding: '14px',
-                      borderRadius: 14,
-                      border: isDA ? '2px solid var(--color-da)' : '1.5px solid var(--color-border)',
-                      background: isDA ? 'linear-gradient(135deg, rgba(79,158,255,0.22), rgba(79,158,255,0.06))' : 'var(--color-bg-card)',
+                      padding: '12px 14px',
+                      borderRadius: 12,
+                      border: isDA ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                      background: isDA ? '#eff6ff' : '#ffffff',
                       cursor: 'pointer',
                       textAlign: 'left',
-                      transition: 'all 0.2s',
-                      boxShadow: isDA ? '0 0 20px var(--color-da-glow)' : 'none',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
                       <span style={{ fontSize: '1.2rem' }}>📊</span>
                       {isDA && <span className="pill pill-da">Aktif</span>}
                     </div>
-                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: isDA ? 'var(--color-da)' : 'var(--color-text-2)' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: isDA ? '#1d4ed8' : '#0f172a' }}>
                       Data Analyst
                     </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--color-text-3)', marginTop: 2 }}>
-                      Insight bisnis & rekomendasi aksi
+                    <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: 2 }}>
+                      Insight bisnis & rekomendasi
                     </div>
                   </button>
 
                   <button
                     onClick={() => setPerspectiveMode('ds')}
                     style={{
-                      padding: '14px',
-                      borderRadius: 14,
-                      border: !isDA ? '2px solid var(--color-ds)' : '1.5px solid var(--color-border)',
-                      background: !isDA ? 'linear-gradient(135deg, rgba(191,127,255,0.22), rgba(191,127,255,0.06))' : 'var(--color-bg-card)',
+                      padding: '12px 14px',
+                      borderRadius: 12,
+                      border: !isDA ? '2px solid #7c3aed' : '1px solid #e2e8f0',
+                      background: !isDA ? '#f5f3ff' : '#ffffff',
                       cursor: 'pointer',
                       textAlign: 'left',
-                      transition: 'all 0.2s',
-                      boxShadow: !isDA ? '0 0 20px var(--color-ds-glow)' : 'none',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
                       <span style={{ fontSize: '1.2rem' }}>🔬</span>
                       {!isDA && <span className="pill pill-ds">Aktif</span>}
                     </div>
-                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: !isDA ? 'var(--color-ds)' : 'var(--color-text-2)' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: !isDA ? '#6d28d9' : '#0f172a' }}>
                       Data Scientist
                     </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--color-text-3)', marginTop: 2 }}>
-                      Statistik, algoritma & pemodelan
+                    <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: 2 }}>
+                      Algoritma, Python & validasi
                     </div>
                   </button>
                 </div>
 
                 {/* Perspective Details Card */}
                 {isDA ? (
-                  /* DA VIEW */
                   <div style={{
-                    background: 'var(--color-bg-card)',
-                    border: '1.5px solid var(--color-da-border)',
-                    borderRadius: 18,
+                    background: '#ffffff',
+                    border: '1px solid #bfdbfe',
+                    borderRadius: 16,
                     padding: '1.25rem',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 12,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
                   }} className="anim-fade-up">
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-da)', fontWeight: 800, fontSize: '0.92rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#1d4ed8', fontWeight: 800, fontSize: '0.92rem' }}>
                       <span>📊</span>
                       <span>Analisis Sudut Pandang Data Analyst</span>
                     </div>
 
-                    {/* Business Insight */}
-                    <div style={{ background: 'var(--color-bg-base)', borderRadius: 12, padding: '0.875rem' }}>
-                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-da)', marginBottom: 4 }}>
+                    <div style={{ background: '#f8fafc', borderRadius: 10, padding: '0.875rem', border: '1px solid #f1f5f9' }}>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#2563eb', marginBottom: 4 }}>
                         🔍 Insight Bisnis:
                       </div>
-                      <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>
+                      <p style={{ fontSize: '0.84rem', color: '#334155', lineHeight: 1.6 }}>
                         {da.insight}
                       </p>
                     </div>
 
-                    {/* Action Items */}
-                    <div style={{ background: 'var(--color-bg-base)', borderRadius: 12, padding: '0.875rem' }}>
-                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-da)', marginBottom: 4 }}>
+                    <div style={{ background: '#f8fafc', borderRadius: 10, padding: '0.875rem', border: '1px solid #f1f5f9' }}>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#2563eb', marginBottom: 4 }}>
                         🎯 Rekomendasi Tindakan (Action Items):
                       </div>
-                      <p style={{ fontSize: '0.84rem', color: 'var(--color-text-1)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+                      <p style={{ fontSize: '0.84rem', color: '#0f172a', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
                         {da.recommendations}
                       </p>
                     </div>
 
-                    {/* Key KPI Metrics */}
                     {da.kpiMetrics?.length > 0 && (
                       <div>
-                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: 6 }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b', marginBottom: 6 }}>
                           📌 KPI / Metrik Pendamping Wajib:
                         </div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -393,34 +375,32 @@ export default function CasePage() {
                     )}
                   </div>
                 ) : (
-                  /* DS VIEW */
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }} className="anim-fade-up">
                     <div style={{
-                      background: 'var(--color-bg-card)',
-                      border: '1.5px solid var(--color-ds-border)',
-                      borderRadius: 18,
+                      background: '#ffffff',
+                      border: '1px solid #ddd6fe',
+                      borderRadius: 16,
                       padding: '1.25rem',
                       display: 'flex',
                       flexDirection: 'column',
                       gap: 12,
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-ds)', fontWeight: 800, fontSize: '0.92rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#6d28d9', fontWeight: 800, fontSize: '0.92rem' }}>
                         <span>🔬</span>
                         <span>Analisis Sudut Pandang Data Scientist</span>
                       </div>
 
-                      {/* Statistical Validation */}
-                      <div style={{ background: 'var(--color-bg-base)', borderRadius: 12, padding: '0.875rem' }}>
-                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-ds)', marginBottom: 4 }}>
+                      <div style={{ background: '#f8fafc', borderRadius: 10, padding: '0.875rem', border: '1px solid #f1f5f9' }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#7c3aed', marginBottom: 4 }}>
                           🧪 Karakteristik Distribusi & Validasi Statistik:
                         </div>
-                        <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>
+                        <p style={{ fontSize: '0.84rem', color: '#334155', lineHeight: 1.6 }}>
                           {ds.statisticalAnalysis}
                         </p>
                       </div>
                     </div>
 
-                    {/* Algorithms & Toolkit Component */}
                     <AlgorithmBadgeList
                       algorithms={ds.algorithms}
                       libraries={ds.pythonLibraries}
@@ -429,11 +409,10 @@ export default function CasePage() {
                   </div>
                 )}
 
-                {/* DOs & DONTs (Tips & Trik Analisis) */}
+                {/* DOs & DONTs */}
                 <DosAndDontsCard dos={dnd.dos} donts={dnd.donts} />
               </>
             ) : (
-              /* MARKDOWN VIEW */
               <MarkdownReportView caseData={caseData} initialMode={perspectiveMode} />
             )}
           </div>

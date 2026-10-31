@@ -119,16 +119,15 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const activeColor = selectedMdMode === 'da' ? 'var(--color-da)' : 'var(--color-ds)';
-  const activeGlow = selectedMdMode === 'da' ? 'var(--color-da-glow)' : 'var(--color-ds-glow)';
+  const activeColor = selectedMdMode === 'da' ? '#2563eb' : '#7c3aed';
 
   return (
     <div style={{
-      background: 'var(--color-bg-card)',
-      border: `1.5px solid ${activeColor}`,
-      borderRadius: 18,
+      background: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: 16,
       padding: '1.25rem',
-      boxShadow: `0 0 20px ${activeGlow}`,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
       display: 'flex',
       flexDirection: 'column',
       gap: 14,
@@ -139,20 +138,20 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, flexWrap: 'wrap', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ fontSize: '1.2rem' }}>📝</span>
-            <span style={{ fontWeight: 800, fontSize: '0.95rem' }}>Pemilihan Format Markdown</span>
+            <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>Pemilihan Format Markdown</span>
           </div>
 
           <div style={{ display: 'flex', gap: 6 }}>
             <button
               onClick={() => setViewFormat('preview')}
               style={{
-                padding: '5px 12px',
+                padding: '4px 10px',
                 borderRadius: 8,
                 fontSize: '0.74rem',
                 fontWeight: 700,
-                border: '1px solid var(--color-border)',
-                background: viewFormat === 'preview' ? 'var(--color-bg-raised)' : 'transparent',
-                color: viewFormat === 'preview' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                border: '1px solid #e2e8f0',
+                background: viewFormat === 'preview' ? '#0f172a' : '#ffffff',
+                color: viewFormat === 'preview' ? '#ffffff' : '#475569',
                 cursor: 'pointer',
               }}
             >
@@ -161,13 +160,13 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
             <button
               onClick={() => setViewFormat('raw')}
               style={{
-                padding: '5px 12px',
+                padding: '4px 10px',
                 borderRadius: 8,
                 fontSize: '0.74rem',
                 fontWeight: 700,
-                border: '1px solid var(--color-border)',
-                background: viewFormat === 'raw' ? 'var(--color-bg-raised)' : 'transparent',
-                color: viewFormat === 'raw' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                border: '1px solid #e2e8f0',
+                background: viewFormat === 'raw' ? '#0f172a' : '#ffffff',
+                color: viewFormat === 'raw' ? '#ffffff' : '#475569',
                 cursor: 'pointer',
               }}
             >
@@ -175,16 +174,10 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
             </button>
             <button
               onClick={handleCopy}
+              className="btn btn-primary"
               style={{
-                padding: '5px 14px',
-                borderRadius: 8,
+                padding: '4px 12px',
                 fontSize: '0.74rem',
-                fontWeight: 700,
-                border: 'none',
-                background: copied ? 'var(--color-success)' : activeColor,
-                color: '#fff',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
               }}
             >
               {copied ? '✓ Tersalin!' : '📋 Salin Markdown'}
@@ -200,23 +193,23 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
               padding: '10px 14px',
               borderRadius: 12,
               border: selectedMdMode === 'da'
-                ? '2px solid var(--color-da)'
-                : '1.5px solid var(--color-border)',
+                ? '2px solid #2563eb'
+                : '1px solid #e2e8f0',
               background: selectedMdMode === 'da'
-                ? 'linear-gradient(135deg, rgba(79,158,255,0.2), rgba(79,158,255,0.06))'
-                : 'var(--color-bg-raised)',
+                ? '#eff6ff'
+                : '#ffffff',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all 0.2s',
+              transition: 'all 0.15s',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontWeight: 800, fontSize: '0.85rem', color: selectedMdMode === 'da' ? 'var(--color-da)' : 'var(--color-text-2)' }}>
+              <span style={{ fontWeight: 800, fontSize: '0.85rem', color: selectedMdMode === 'da' ? '#1d4ed8' : '#0f172a' }}>
                 📊 Markdown Data Analyst
               </span>
               {selectedMdMode === 'da' && <span className="pill pill-da">Aktif</span>}
             </div>
-            <p style={{ fontSize: '0.7rem', color: 'var(--color-text-3)', marginTop: 4 }}>
+            <p style={{ fontSize: '0.72rem', color: '#64748b', marginTop: 4 }}>
               Format metrik KPI, tren bisnis, dan rencana aksi operasional.
             </p>
           </button>
@@ -227,23 +220,23 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
               padding: '10px 14px',
               borderRadius: 12,
               border: selectedMdMode === 'ds'
-                ? '2px solid var(--color-ds)'
-                : '1.5px solid var(--color-border)',
+                ? '2px solid #7c3aed'
+                : '1px solid #e2e8f0',
               background: selectedMdMode === 'ds'
-                ? 'linear-gradient(135deg, rgba(191,127,255,0.2), rgba(191,127,255,0.06))'
-                : 'var(--color-bg-raised)',
+                ? '#f5f3ff'
+                : '#ffffff',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all 0.2s',
+              transition: 'all 0.15s',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontWeight: 800, fontSize: '0.85rem', color: selectedMdMode === 'ds' ? 'var(--color-ds)' : 'var(--color-text-2)' }}>
+              <span style={{ fontWeight: 800, fontSize: '0.85rem', color: selectedMdMode === 'ds' ? '#6d28d9' : '#0f172a' }}>
                 🔬 Markdown Data Science
               </span>
               {selectedMdMode === 'ds' && <span className="pill pill-ds">Aktif</span>}
             </div>
-            <p style={{ fontSize: '0.7rem', color: 'var(--color-text-3)', marginTop: 4 }}>
+            <p style={{ fontSize: '0.72rem', color: '#64748b', marginTop: 4 }}>
               Format algoritma ML, karakteristik distribusi, library Python, & validasi.
             </p>
           </button>
@@ -252,8 +245,8 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
 
       {/* Content Box */}
       <div style={{
-        background: 'var(--color-bg-base)',
-        border: '1px solid var(--color-border)',
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
         borderRadius: 12,
         padding: '1.15rem',
         maxHeight: 480,
@@ -268,45 +261,45 @@ ${dnd.donts.map(d => `- ${d}`).join('\n') || '- Jangan menyamakan korelasi denga
               height: 420,
               background: 'transparent',
               border: 'none',
-              color: 'var(--color-text-2)',
+              color: '#0f172a',
               fontFamily: 'monospace',
-              fontSize: '0.8rem',
+              fontSize: '0.82rem',
               lineHeight: 1.6,
               resize: 'none',
               outline: 'none',
             }}
           />
         ) : (
-          <div className="markdown-body" style={{ color: 'var(--color-text-1)', fontSize: '0.85rem', lineHeight: 1.7 }}>
+          <div className="markdown-body" style={{ color: '#0f172a', fontSize: '0.86rem', lineHeight: 1.7 }}>
             <ReactMarkdown
               components={{
-                h1: ({ node, ...props }) => <h1 style={{ color: activeColor, fontSize: '1.25rem', fontWeight: 800, borderBottom: `1px solid ${activeColor}40`, paddingBottom: 6, marginBottom: 12 }} {...props} />,
-                h2: ({ node, ...props }) => <h2 style={{ color: 'var(--color-text-1)', fontSize: '1.05rem', fontWeight: 700, marginTop: 16, marginBottom: 8 }} {...props} />,
+                h1: ({ node, ...props }) => <h1 style={{ color: activeColor, fontSize: '1.25rem', fontWeight: 800, borderBottom: `1px solid #cbd5e1`, paddingBottom: 6, marginBottom: 12 }} {...props} />,
+                h2: ({ node, ...props }) => <h2 style={{ color: '#0f172a', fontSize: '1.05rem', fontWeight: 700, marginTop: 16, marginBottom: 8 }} {...props} />,
                 h3: ({ node, ...props }) => <h3 style={{ color: activeColor, fontSize: '0.95rem', fontWeight: 700, marginTop: 14, marginBottom: 6 }} {...props} />,
-                h4: ({ node, ...props }) => <h4 style={{ color: 'var(--color-text-2)', fontSize: '0.88rem', fontWeight: 700, marginTop: 10, marginBottom: 4 }} {...props} />,
+                h4: ({ node, ...props }) => <h4 style={{ color: '#334155', fontSize: '0.88rem', fontWeight: 700, marginTop: 10, marginBottom: 4 }} {...props} />,
                 blockquote: ({ node, ...props }) => (
                   <blockquote style={{
                     borderLeft: `3px solid ${activeColor}`,
-                    background: `${activeColor}12`,
+                    background: '#f1f5f9',
                     padding: '8px 12px',
                     borderRadius: '0 8px 8px 0',
                     margin: '8px 0',
-                    color: 'var(--color-text-2)',
+                    color: '#334155',
                   }} {...props} />
                 ),
                 code: ({ node, ...props }) => (
                   <code style={{
-                    background: 'var(--color-bg-raised)',
+                    background: '#e2e8f0',
                     padding: '2px 6px',
                     borderRadius: 4,
-                    color: activeColor,
+                    color: '#0f172a',
                     fontSize: '0.82em',
                     fontFamily: 'monospace',
                   }} {...props} />
                 ),
                 ul: ({ node, ...props }) => <ul style={{ paddingLeft: 20, margin: '6px 0' }} {...props} />,
                 li: ({ node, ...props }) => <li style={{ marginBottom: 4 }} {...props} />,
-                hr: ({ node, ...props }) => <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '14px 0' }} {...props} />,
+                hr: ({ node, ...props }) => <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '14px 0' }} {...props} />,
               }}
             >
               {currentMarkdown}

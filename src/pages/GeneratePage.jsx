@@ -18,12 +18,12 @@ const CATEGORIES = [
 ];
 
 const CATEGORY_COLORS = {
-  'Finance': { bg: 'rgba(56,189,248,0.14)', text: '#38bdf8', border: 'rgba(56,189,248,0.35)' },
-  'E-Commerce': { bg: 'rgba(251,146,60,0.14)', text: '#fb923c', border: 'rgba(251,146,60,0.35)' },
-  'Digital Marketing': { bg: 'rgba(244,63,94,0.14)', text: '#f43f5e', border: 'rgba(244,63,94,0.35)' },
-  'SaaS & Product': { bg: 'rgba(168,85,247,0.14)', text: '#c084fc', border: 'rgba(168,85,247,0.35)' },
-  'Social Media': { bg: 'rgba(236,72,153,0.14)', text: '#f472b6', border: 'rgba(236,72,153,0.35)' },
-  'Healthcare': { bg: 'rgba(52,211,153,0.14)', text: '#34d399', border: 'rgba(52,211,153,0.35)' },
+  'Finance': { bg: '#eff6ff', text: '#1d4ed8', border: '#bfdbfe' },
+  'E-Commerce': { bg: '#fff7ed', text: '#c2410c', border: '#fed7aa' },
+  'Digital Marketing': { bg: '#fdf2f8', text: '#be185d', border: '#fbcfe8' },
+  'SaaS & Product': { bg: '#f5f3ff', text: '#6d28d9', border: '#ddd6fe' },
+  'Social Media': { bg: '#fdf4ff', text: '#a21caf', border: '#f5d0fe' },
+  'Healthcare': { bg: '#ecfdf5', text: '#047857', border: '#a7f3d0' },
 };
 
 export default function GeneratePage() {
@@ -34,7 +34,6 @@ export default function GeneratePage() {
   const [activeTab, setActiveTab] = useState('breakdown'); // 'breakdown' | 'markdown'
   const [generationCount, setGenerationCount] = useState(1);
 
-  // Generate initial case on mount
   useEffect(() => {
     handleGenerateNewCase();
   }, []);
@@ -58,14 +57,14 @@ export default function GeneratePage() {
   const dnd = currentCase.dosAndDonts || { dos: [], donts: [] };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg-base)' }}>
+    <div style={{ minHeight: '100vh', background: '#f8fafc', color: '#0f172a' }}>
 
       {/* HEADER */}
       <header style={{
         position: 'sticky', top: 0, zIndex: 40,
-        background: 'rgba(7,9,15,0.92)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--color-border)',
+        background: 'rgba(255,255,255,0.95)',
+        backdropFilter: 'blur(8px)',
+        borderBottom: '1px solid #e2e8f0',
         padding: '0.75rem 1rem',
       }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -75,7 +74,7 @@ export default function GeneratePage() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: '1.2rem' }}>⚡</span>
-            <span style={{ fontWeight: 900, fontSize: '0.95rem' }}>Study Case Generator</span>
+            <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>Study Case Generator</span>
             <span className="pill pill-green" style={{ fontSize: '0.68rem' }}>Live Engine</span>
           </div>
 
@@ -87,22 +86,23 @@ export default function GeneratePage() {
 
       <main style={{ maxWidth: 1100, margin: '0 auto', padding: '1.75rem 1rem 4rem' }}>
 
-        {/* ── BIG GENERATOR ACTION HERO ── */}
+        {/* ── BIG GENERATOR ACTION HERO (Clean & Professional White) ── */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(236,72,153,0.14), rgba(139,92,246,0.14))',
-          border: '2px solid rgba(236,72,153,0.4)',
-          borderRadius: 24,
+          background: '#ffffff',
+          border: '1px solid #cbd5e1',
+          borderRadius: 20,
           padding: '1.5rem',
           marginBottom: '1.75rem',
-          boxShadow: '0 0 30px rgba(236,72,153,0.18)',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
         }} className="anim-fade-up">
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 14 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                 <span style={{
-                  background: 'rgba(236,72,153,0.25)',
-                  color: '#f472b6',
+                  background: '#eff6ff',
+                  color: '#2563eb',
+                  border: '1px solid #bfdbfe',
                   padding: '2px 8px',
                   borderRadius: 99,
                   fontSize: '0.72rem',
@@ -110,45 +110,41 @@ export default function GeneratePage() {
                 }}>
                   GENERATOR KASUS REAL-TIME
                 </span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-3)' }}>
+                <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
                   Generasi ke-#{generationCount}
                 </span>
               </div>
-              <h1 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.85rem)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>
+              <h1 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.85rem)', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.02em' }}>
                 Generate Studi Kasus & Kunjaw Baru
               </h1>
-              <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', maxWidth: 620, marginTop: 4 }}>
-                Klik tombol di kanan untuk men-generate grafik baru secara prosedural dengan formula matematika nyata, lengkap beserta kunci jawaban dan alasannya!
+              <p style={{ fontSize: '0.86rem', color: '#475569', maxWidth: 620, marginTop: 4 }}>
+                Klik tombol di kanan untuk men-generate grafik baru dengan data acak realistis, lengkap beserta kunci jawaban dan alasannya.
               </p>
             </div>
 
-            {/* BIG SHINY GENERATE BUTTON */}
+            {/* BIG SOLID GENERATE BUTTON */}
             <button
               onClick={() => handleGenerateNewCase(selectedCategory)}
-              className="btn"
+              className="btn btn-primary"
               style={{
-                background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
-                color: '#fff',
-                padding: '0.9rem 2rem',
-                fontSize: '1rem',
-                fontWeight: 900,
-                borderRadius: 16,
-                boxShadow: '0 6px 28px rgba(236,72,153,0.45)',
+                padding: '0.85rem 1.85rem',
+                fontSize: '0.98rem',
+                fontWeight: 800,
+                borderRadius: 12,
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 10,
-                border: 'none',
+                gap: 8,
               }}
             >
-              <span style={{ fontSize: '1.3rem' }}>⚡</span>
-              <span>GENERATE KASUS BARU!</span>
+              <span>⚡</span>
+              <span>GENERATE KASUS BARU</span>
             </button>
           </div>
 
           {/* Category Filter Pills inside Generator */}
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: 16, paddingTop: 14 }}>
-            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--color-text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
+          <div style={{ borderTop: '1px solid #f1f5f9', marginTop: 16, paddingTop: 14 }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
               Pilih Fokus Industri Kasus:
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -161,9 +157,9 @@ export default function GeneratePage() {
                     style={{
                       padding: '5px 12px',
                       borderRadius: 99,
-                      border: isActive ? '1.5px solid #f472b6' : '1px solid var(--color-border)',
-                      background: isActive ? 'rgba(236,72,153,0.25)' : 'var(--color-bg-base)',
-                      color: isActive ? '#f472b6' : 'var(--color-text-2)',
+                      border: isActive ? '1.5px solid #0f172a' : '1px solid #e2e8f0',
+                      background: isActive ? '#0f172a' : '#ffffff',
+                      color: isActive ? '#ffffff' : '#475569',
                       fontSize: '0.75rem',
                       fontWeight: isActive ? 800 : 600,
                       cursor: 'pointer',
@@ -180,11 +176,12 @@ export default function GeneratePage() {
 
         {/* ── CASE DETAILS HEADER ── */}
         <div style={{
-          background: 'var(--color-bg-card)',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: 20,
+          background: '#ffffff',
+          border: '1px solid #e2e8f0',
+          borderRadius: 16,
           padding: '1.5rem',
           marginBottom: '1.5rem',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
         }} className="anim-fade-up">
 
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: 10 }}>
@@ -192,7 +189,7 @@ export default function GeneratePage() {
               background: catStyle.bg,
               color: catStyle.text,
               border: `1px solid ${catStyle.border}`,
-              padding: '3px 10px',
+              padding: '2px 9px',
               borderRadius: 99,
               fontSize: '0.74rem',
               fontWeight: 800,
@@ -200,10 +197,10 @@ export default function GeneratePage() {
               🏷️ Kategori: {currentCase.category}
             </span>
             <span style={{
-              background: 'var(--color-bg-raised)',
-              border: '1px solid var(--color-border)',
-              color: 'var(--color-text-3)',
-              padding: '3px 10px',
+              background: '#f1f5f9',
+              border: '1px solid #e2e8f0',
+              color: '#475569',
+              padding: '2px 9px',
               borderRadius: 99,
               fontSize: '0.74rem',
               fontWeight: 700,
@@ -218,22 +215,22 @@ export default function GeneratePage() {
           <h2 style={{
             fontSize: 'clamp(1.35rem, 2.8vw, 1.75rem)',
             fontWeight: 900,
-            color: 'var(--color-text-1)',
+            color: '#0f172a',
             marginBottom: 10,
           }}>
             {currentCase.title}
           </h2>
 
           <div style={{
-            background: 'var(--color-bg-base)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 14,
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: 12,
             padding: '1rem',
           }}>
-            <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-warning)', marginBottom: 4 }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#d97706', marginBottom: 4 }}>
               ❓ Studi Kasus / Problem Bisnis:
             </div>
-            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.6 }}>
               {currentCase.problemStatement}
             </p>
           </div>
@@ -250,16 +247,17 @@ export default function GeneratePage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
             <div style={{
-              background: 'var(--color-bg-card)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 18,
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              borderRadius: 16,
               padding: '1.25rem',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-text-2)' }}>
+                <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0f172a' }}>
                   📈 Visualisasi Data Acak
                 </span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-3)' }}>
+                <span style={{ fontSize: '0.74rem', color: '#64748b' }}>
                   X: {currentCase.xLabel} | Y: {currentCase.yLabel}
                 </span>
               </div>
@@ -270,33 +268,34 @@ export default function GeneratePage() {
 
             {/* Quick Answer */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.02))',
-              border: '2px solid rgba(56,189,248,0.4)',
-              borderRadius: 18,
+              background: '#f0f9ff',
+              border: '1px solid #bae6fd',
+              borderRadius: 16,
               padding: '1.25rem',
-              boxShadow: '0 0 20px rgba(56,189,248,0.15)',
+              boxShadow: '0 1px 3px rgba(2,132,199,0.06)',
             }} className="anim-fade-up">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#38bdf8', fontWeight: 800, fontSize: '0.92rem', marginBottom: 6 }}>
-                <span style={{ fontSize: '1.2rem' }}>💡</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#0284c7', fontWeight: 800, fontSize: '0.92rem', marginBottom: 6 }}>
+                <span style={{ fontSize: '1.15rem' }}>💡</span>
                 <span>Kunci Jawaban Cepat (TL;DR)</span>
               </div>
-              <p style={{ fontSize: '0.88rem', color: 'var(--color-text-1)', fontWeight: 600, lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.88rem', color: '#0c4a6e', fontWeight: 600, lineHeight: 1.6 }}>
                 "{currentCase.quickAnswer}"
               </p>
             </div>
 
             {/* Detailed Reasoning */}
             <div style={{
-              background: 'var(--color-bg-card)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 18,
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              borderRadius: 16,
               padding: '1.25rem',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-text-1)', fontWeight: 800, fontSize: '0.9rem', marginBottom: 8 }}>
-                <span style={{ fontSize: '1.2rem' }}>🧠</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#0f172a', fontWeight: 800, fontSize: '0.9rem', marginBottom: 8 }}>
+                <span style={{ fontSize: '1.15rem' }}>🧠</span>
                 <span>Kenapa Jawabannya Begitu? (Reasoning)</span>
               </div>
-              <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', lineHeight: 1.65 }}>
+              <p style={{ fontSize: '0.84rem', color: '#334155', lineHeight: 1.65 }}>
                 {currentCase.detailedReasoning}
               </p>
             </div>
@@ -304,14 +303,11 @@ export default function GeneratePage() {
             {/* Bottom Generate Again Button */}
             <button
               onClick={() => handleGenerateNewCase(selectedCategory)}
-              className="btn"
+              className="btn btn-primary"
               style={{
-                background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
-                color: '#fff',
-                padding: '0.9rem',
-                fontSize: '0.95rem',
-                borderRadius: 14,
-                boxShadow: '0 4px 20px rgba(236,72,153,0.3)',
+                padding: '0.85rem',
+                fontSize: '0.92rem',
+                borderRadius: 12,
               }}
             >
               ⚡ Generate Kasus Lainnya
@@ -323,19 +319,20 @@ export default function GeneratePage() {
 
             <div style={{
               display: 'flex',
-              background: 'var(--color-bg-card)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 14,
-              padding: 4,
-              gap: 6,
+              background: '#f1f5f9',
+              border: '1px solid #e2e8f0',
+              borderRadius: 12,
+              padding: 3,
+              gap: 4,
             }}>
               <button
                 onClick={() => setActiveTab('breakdown')}
                 style={{
-                  flex: 1, padding: '9px 12px', borderRadius: 10, border: 'none',
-                  background: activeTab === 'breakdown' ? 'var(--color-bg-raised)' : 'transparent',
-                  color: activeTab === 'breakdown' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  flex: 1, padding: '8px 12px', borderRadius: 9, border: 'none',
+                  background: activeTab === 'breakdown' ? '#ffffff' : 'transparent',
+                  color: activeTab === 'breakdown' ? '#0f172a' : '#64748b',
                   fontWeight: 800, fontSize: '0.82rem', cursor: 'pointer',
+                  boxShadow: activeTab === 'breakdown' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
                 }}
               >
                 🔍 Kunjaw & Analisis Interaktif
@@ -343,10 +340,11 @@ export default function GeneratePage() {
               <button
                 onClick={() => setActiveTab('markdown')}
                 style={{
-                  flex: 1, padding: '9px 12px', borderRadius: 10, border: 'none',
-                  background: activeTab === 'markdown' ? 'var(--color-bg-raised)' : 'transparent',
-                  color: activeTab === 'markdown' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  flex: 1, padding: '8px 12px', borderRadius: 9, border: 'none',
+                  background: activeTab === 'markdown' ? '#ffffff' : 'transparent',
+                  color: activeTab === 'markdown' ? '#0f172a' : '#64748b',
                   fontWeight: 800, fontSize: '0.82rem', cursor: 'pointer',
+                  boxShadow: activeTab === 'markdown' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
                 }}
               >
                 📝 Pemilihan Markdown (DA / DS)
@@ -360,20 +358,21 @@ export default function GeneratePage() {
                   <button
                     onClick={() => setPerspectiveMode('da')}
                     style={{
-                      padding: '14px', borderRadius: 14,
-                      border: isDA ? '2px solid var(--color-da)' : '1.5px solid var(--color-border)',
-                      background: isDA ? 'linear-gradient(135deg, rgba(79,158,255,0.22), rgba(79,158,255,0.06))' : 'var(--color-bg-card)',
+                      padding: '12px 14px', borderRadius: 12,
+                      border: isDA ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                      background: isDA ? '#eff6ff' : '#ffffff',
                       cursor: 'pointer', textAlign: 'left',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
                       <span style={{ fontSize: '1.2rem' }}>📊</span>
                       {isDA && <span className="pill pill-da">Aktif</span>}
                     </div>
-                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: isDA ? 'var(--color-da)' : 'var(--color-text-2)' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: isDA ? '#1d4ed8' : '#0f172a' }}>
                       Data Analyst
                     </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--color-text-3)' }}>
+                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
                       Insight bisnis & rekomendasi
                     </div>
                   </button>
@@ -381,20 +380,21 @@ export default function GeneratePage() {
                   <button
                     onClick={() => setPerspectiveMode('ds')}
                     style={{
-                      padding: '14px', borderRadius: 14,
-                      border: !isDA ? '2px solid var(--color-ds)' : '1.5px solid var(--color-border)',
-                      background: !isDA ? 'linear-gradient(135deg, rgba(191,127,255,0.22), rgba(191,127,255,0.06))' : 'var(--color-bg-card)',
+                      padding: '12px 14px', borderRadius: 12,
+                      border: !isDA ? '2px solid #7c3aed' : '1px solid #e2e8f0',
+                      background: !isDA ? '#f5f3ff' : '#ffffff',
                       cursor: 'pointer', textAlign: 'left',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
                       <span style={{ fontSize: '1.2rem' }}>🔬</span>
                       {!isDA && <span className="pill pill-ds">Aktif</span>}
                     </div>
-                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: !isDA ? 'var(--color-ds)' : 'var(--color-text-2)' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: !isDA ? '#6d28d9' : '#0f172a' }}>
                       Data Scientist
                     </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--color-text-3)' }}>
+                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
                       Algoritma, Python & validasi
                     </div>
                   </button>
@@ -403,41 +403,42 @@ export default function GeneratePage() {
                 {/* Perspective Details */}
                 {isDA ? (
                   <div style={{
-                    background: 'var(--color-bg-card)',
-                    border: '1.5px solid var(--color-da-border)',
-                    borderRadius: 18,
+                    background: '#ffffff',
+                    border: '1px solid #bfdbfe',
+                    borderRadius: 16,
                     padding: '1.25rem',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 12,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
                   }} className="anim-fade-up">
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-da)', fontWeight: 800, fontSize: '0.92rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#1d4ed8', fontWeight: 800, fontSize: '0.92rem' }}>
                       <span>📊</span>
                       <span>Analisis Sudut Pandang Data Analyst</span>
                     </div>
 
-                    <div style={{ background: 'var(--color-bg-base)', borderRadius: 12, padding: '0.875rem' }}>
-                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-da)', marginBottom: 4 }}>
+                    <div style={{ background: '#f8fafc', borderRadius: 10, padding: '0.875rem', border: '1px solid #f1f5f9' }}>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#2563eb', marginBottom: 4 }}>
                         🔍 Insight Bisnis:
                       </div>
-                      <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>
+                      <p style={{ fontSize: '0.84rem', color: '#334155', lineHeight: 1.6 }}>
                         {da.insight}
                       </p>
                     </div>
 
-                    <div style={{ background: 'var(--color-bg-base)', borderRadius: 12, padding: '0.875rem' }}>
-                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-da)', marginBottom: 4 }}>
+                    <div style={{ background: '#f8fafc', borderRadius: 10, padding: '0.875rem', border: '1px solid #f1f5f9' }}>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#2563eb', marginBottom: 4 }}>
                         🎯 Rekomendasi Tindakan (Action Items):
                       </div>
-                      <p style={{ fontSize: '0.84rem', color: 'var(--color-text-1)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+                      <p style={{ fontSize: '0.84rem', color: '#0f172a', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
                         {da.recommendations}
                       </p>
                     </div>
 
                     {da.kpiMetrics?.length > 0 && (
                       <div>
-                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: 6 }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b', marginBottom: 6 }}>
                           📌 KPI / Metrik Pendamping Wajib:
                         </div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -453,24 +454,25 @@ export default function GeneratePage() {
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }} className="anim-fade-up">
                     <div style={{
-                      background: 'var(--color-bg-card)',
-                      border: '1.5px solid var(--color-ds-border)',
-                      borderRadius: 18,
+                      background: '#ffffff',
+                      border: '1px solid #ddd6fe',
+                      borderRadius: 16,
                       padding: '1.25rem',
                       display: 'flex',
                       flexDirection: 'column',
                       gap: 12,
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-ds)', fontWeight: 800, fontSize: '0.92rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#6d28d9', fontWeight: 800, fontSize: '0.92rem' }}>
                         <span>🔬</span>
                         <span>Analisis Sudut Pandang Data Scientist</span>
                       </div>
 
-                      <div style={{ background: 'var(--color-bg-base)', borderRadius: 12, padding: '0.875rem' }}>
-                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-ds)', marginBottom: 4 }}>
+                      <div style={{ background: '#f8fafc', borderRadius: 10, padding: '0.875rem', border: '1px solid #f1f5f9' }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#7c3aed', marginBottom: 4 }}>
                           🧪 Karakteristik Distribusi & Validasi Statistik:
                         </div>
-                        <p style={{ fontSize: '0.84rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>
+                        <p style={{ fontSize: '0.84rem', color: '#334155', lineHeight: 1.6 }}>
                           {ds.statisticalAnalysis}
                         </p>
                       </div>

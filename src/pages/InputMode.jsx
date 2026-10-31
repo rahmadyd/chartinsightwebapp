@@ -138,9 +138,9 @@ export default function InputMode() {
       {/* HEADER */}
       <header style={{
         position: 'sticky', top: 0, zIndex: 40,
-        background: 'rgba(7,9,15,0.9)', backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--color-border)',
-        padding: '0.7rem 1rem',
+        background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(8px)',
+        borderBottom: '1px solid #e2e8f0',
+        padding: '0.75rem 1rem',
       }}>
         <div style={{ maxWidth: 860, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Link to="/" className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>

@@ -5,32 +5,32 @@ export default function AlgorithmBadgeList({ algorithms = [], libraries = [], ex
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, rgba(191,127,255,0.08), rgba(191,127,255,0.02))',
-      border: '1.5px solid var(--color-ds-border)',
-      borderRadius: 16,
+      background: '#f5f3ff',
+      border: '1px solid #ddd6fe',
+      borderRadius: 14,
       padding: '1.15rem',
       display: 'flex',
       flexDirection: 'column',
       gap: 12,
     }} className="anim-fade-up">
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-ds)', fontWeight: 800, fontSize: '0.9rem' }}>
-        <span style={{ fontSize: '1.2rem' }}>⚙️</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#6d28d9', fontWeight: 800, fontSize: '0.9rem' }}>
+        <span style={{ fontSize: '1.15rem' }}>⚙️</span>
         <span>Rekomendasi Algoritma & Toolkit Data Science</span>
       </div>
 
       {/* Algorithms */}
       {algorithms.length > 0 && (
         <div>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
             Algoritma / Metode yang Tepat:
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {algorithms.map((algo, i) => (
               <span key={i} style={{
-                background: 'rgba(191,127,255,0.14)',
-                border: '1px solid var(--color-ds-border)',
-                color: 'var(--color-ds)',
+                background: '#ede9fe',
+                border: '1px solid #ddd6fe',
+                color: '#6d28d9',
                 padding: '4px 10px',
                 borderRadius: 8,
                 fontSize: '0.75rem',
@@ -49,15 +49,15 @@ export default function AlgorithmBadgeList({ algorithms = [], libraries = [], ex
       {/* Python Libraries */}
       {libraries.length > 0 && (
         <div>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
             Library Python yang Digunakan:
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {libraries.map((lib, i) => (
               <span key={i} style={{
-                background: 'var(--color-bg-base)',
-                border: '1px solid var(--color-border)',
-                color: '#38bdf8',
+                background: '#ffffff',
+                border: '1px solid #cbd5e1',
+                color: '#0f172a',
                 padding: '3px 8px',
                 borderRadius: 6,
                 fontSize: '0.72rem',
@@ -74,15 +74,15 @@ export default function AlgorithmBadgeList({ algorithms = [], libraries = [], ex
       {/* Next Experiment */}
       {experiment && (
         <div style={{
-          background: 'var(--color-bg-base)',
-          border: '1px solid var(--color-border)',
+          background: '#ffffff',
+          border: '1px solid #ddd6fe',
           borderRadius: 10,
           padding: '0.75rem',
-          fontSize: '0.78rem',
-          color: 'var(--color-text-2)',
+          fontSize: '0.8rem',
+          color: '#334155',
           lineHeight: 1.5,
         }}>
-          <strong style={{ color: 'var(--color-ds)' }}>🔬 Desain Eksperimen / Validasi:</strong> {experiment}
+          <strong style={{ color: '#6d28d9' }}>🔬 Desain Eksperimen / Validasi:</strong> {experiment}
         </div>
       )}
     </div>

@@ -12,68 +12,69 @@ ChartJS.register(
   BarElement, Title, Tooltip, Legend, Filler,
 );
 
-// DA colors = blue family, DS colors = purple family
+// Clean professional light palette (No AI neon)
 const PALETTE = {
   da: {
-    line: ['rgba(79,158,255,1)', 'rgba(34,211,238,1)', 'rgba(52,211,153,1)'],
-    lineFill: ['rgba(79,158,255,0.12)', 'rgba(34,211,238,0.10)', 'rgba(52,211,153,0.10)'],
-    bar: 'rgba(79,158,255,0.75)',
-    barBorder: 'rgba(79,158,255,1)',
-    scatter: 'rgba(79,158,255,0.7)',
-    scatterBorder: 'rgba(79,158,255,1)',
+    line: ['#2563eb', '#0284c7', '#059669'],
+    lineFill: ['rgba(37,99,235,0.08)', 'rgba(2,132,199,0.06)', 'rgba(5,150,105,0.06)'],
+    bar: 'rgba(37,99,235,0.85)',
+    barBorder: '#2563eb',
+    scatter: '#2563eb',
+    scatterBorder: '#1d4ed8',
   },
   ds: {
-    line: ['rgba(191,127,255,1)', 'rgba(251,146,60,1)', 'rgba(52,211,153,1)'],
-    lineFill: ['rgba(191,127,255,0.12)', 'rgba(251,146,60,0.10)', 'rgba(52,211,153,0.10)'],
-    bar: 'rgba(191,127,255,0.75)',
-    barBorder: 'rgba(191,127,255,1)',
-    scatter: 'rgba(191,127,255,0.7)',
-    scatterBorder: 'rgba(191,127,255,1)',
+    line: ['#7c3aed', '#d97706', '#059669'],
+    lineFill: ['rgba(124,58,237,0.08)', 'rgba(217,119,6,0.06)', 'rgba(5,150,105,0.06)'],
+    bar: 'rgba(124,58,237,0.85)',
+    barBorder: '#7c3aed',
+    scatter: '#7c3aed',
+    scatterBorder: '#6d28d9',
   },
 };
 
 const baseOptions = (title, xLabel, yLabel, mode) => ({
   responsive: true,
   maintainAspectRatio: false,
-  animation: { duration: 600, easing: 'easeInOutQuart' },
+  animation: { duration: 400, easing: 'easeOutQuart' },
   plugins: {
     legend: {
       labels: {
-        color: '#94a3b8',
-        font: { size: 11, family: 'Inter, system-ui' },
-        padding: 14,
-        boxWidth: 12,
-        boxHeight: 12,
+        color: '#475569',
+        font: { size: 11, family: 'Plus Jakarta Sans, Inter, system-ui', weight: '600' },
+        padding: 12,
+        boxWidth: 10,
+        boxHeight: 10,
+        usePointStyle: true,
       },
     },
     title: {
       display: !!title,
       text: title,
-      color: '#f0f4ff',
-      font: { size: 13, weight: '700', family: 'Inter, system-ui' },
-      padding: { bottom: 14 },
+      color: '#0f172a',
+      font: { size: 13, weight: '700', family: 'Plus Jakarta Sans, Inter, system-ui' },
+      padding: { bottom: 12 },
     },
     tooltip: {
-      backgroundColor: '#0f1422',
-      borderColor: mode === 'da' ? 'rgba(79,158,255,0.4)' : 'rgba(191,127,255,0.4)',
+      backgroundColor: '#0f172a',
+      borderColor: '#e2e8f0',
       borderWidth: 1,
-      titleColor: '#f0f4ff',
-      bodyColor: '#b8c4e0',
+      titleColor: '#ffffff',
+      bodyColor: '#cbd5e1',
       padding: 10,
-      cornerRadius: 10,
+      cornerRadius: 8,
       boxPadding: 4,
     },
   },
   scales: {
     x: {
-      grid: { color: 'rgba(42,53,80,0.6)', drawBorder: false },
-      ticks: { color: '#6b7fa3', font: { size: 10, family: 'Inter, system-ui' } },
-      title: { display: !!xLabel, text: xLabel, color: '#6b7fa3', font: { size: 10 } },
+      grid: { color: '#f1f5f9', drawBorder: false },
+      ticks: { color: '#64748b', font: { size: 11, family: 'Plus Jakarta Sans, Inter, system-ui' } },
+      title: { display: !!xLabel, text: xLabel, color: '#64748b', font: { size: 11, weight: '600' } },
     },
     y: {
-      grid: { color: 'rgba(42,53,80,0.6)', drawBorder: false },
-      ticks: { color: '#6b7fa3', font: { size: 10, family: 'Inter, system-ui' } },
-      title: { display: !!yLabel, text: yLabel, color: '#6b7fa3', font: { size: 10 } },
+      grid: { color: '#f1f5f9', drawBorder: false },
+      ticks: { color: '#64748b', font: { size: 11, family: 'Plus Jakarta Sans, Inter, system-ui' } },
+      title: { display: !!yLabel, text: yLabel, color: '#64748b', font: { size: 11, weight: '600' } },
     },
   },
 });
@@ -87,7 +88,11 @@ function buildLine(caseData, p) {
         data: ds.values,
         borderColor: p.line[i % p.line.length],
         backgroundColor: p.lineFill[i % p.lineFill.length],
-        tension: 0.4, fill: false, pointRadius: 5, pointHoverRadius: 8, borderWidth: 2.5,
+        tension: 0.35,
+        fill: false,
+        pointRadius: 4.5,
+        pointHoverRadius: 7,
+        borderWidth: 2.2,
       })),
     };
   }
@@ -98,7 +103,11 @@ function buildLine(caseData, p) {
       data: caseData.values,
       borderColor: p.line[0],
       backgroundColor: p.lineFill[0],
-      tension: 0.4, fill: true, pointRadius: 5, pointHoverRadius: 8, borderWidth: 2.5,
+      tension: 0.35,
+      fill: true,
+      pointRadius: 4.5,
+      pointHoverRadius: 7,
+      borderWidth: 2.2,
       pointBackgroundColor: p.line[0],
     }],
   };
@@ -112,8 +121,8 @@ function buildBar(caseData, p) {
       data: caseData.values,
       backgroundColor: p.bar,
       borderColor: p.barBorder,
-      borderWidth: 1.5,
-      borderRadius: 8,
+      borderWidth: 1,
+      borderRadius: 6,
       borderSkipped: false,
       hoverBackgroundColor: p.barBorder,
     }],
@@ -127,9 +136,9 @@ function buildScatter(caseData, p) {
       data: caseData.scatterData,
       backgroundColor: p.scatter,
       borderColor: p.scatterBorder,
-      borderWidth: 1.5,
-      pointRadius: 7,
-      pointHoverRadius: 10,
+      borderWidth: 1,
+      pointRadius: 5.5,
+      pointHoverRadius: 8,
     }],
   };
 }
@@ -154,5 +163,5 @@ export default function ChartView({ caseData, mode: modeProp }) {
       }}
     />
   );
-  return <div style={{ textAlign: 'center', color: 'var(--color-text-3)', padding: '2rem' }}>Jenis grafik tidak dikenali: {caseData.chartType}</div>;
+  return <div style={{ textAlign: 'center', color: '#64748b', padding: '2rem' }}>Jenis grafik: {caseData.chartType}</div>;
 }

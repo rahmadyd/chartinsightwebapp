@@ -13,23 +13,23 @@ export default function DosAndDontsCard({ dos = [], donts = [] }) {
 
       {/* DOs Card */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(52,211,153,0.08), rgba(52,211,153,0.02))',
-        border: '1.5px solid rgba(52,211,153,0.3)',
-        borderRadius: 16,
+        background: '#f0fdf4',
+        border: '1px solid #bbf7d0',
+        borderRadius: 14,
         padding: '1.15rem',
       }}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8,
           marginBottom: 10,
-          color: '#34d399',
+          color: '#15803d',
           fontWeight: 800,
           fontSize: '0.88rem',
         }}>
           <span style={{
-            background: 'rgba(52,211,153,0.2)',
-            width: 26, height: 26, borderRadius: '50%',
+            background: '#dcfce7',
+            width: 24, height: 24, borderRadius: '50%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '0.8rem',
+            fontSize: '0.78rem',
           }}>✓</span>
           <span>Yang Harus Dilakukan (DOs)</span>
         </div>
@@ -38,10 +38,10 @@ export default function DosAndDontsCard({ dos = [], donts = [] }) {
           {dos.map((item, idx) => (
             <li key={idx} style={{
               display: 'flex', alignItems: 'flex-start', gap: 8,
-              fontSize: '0.8rem', color: 'var(--color-text-2)',
+              fontSize: '0.82rem', color: '#1e293b',
               lineHeight: 1.5,
             }}>
-              <span style={{ color: '#34d399', fontWeight: 800, minWidth: 16 }}>•</span>
+              <span style={{ color: '#16a34a', fontWeight: 800, minWidth: 16 }}>•</span>
               <span>{item}</span>
             </li>
           ))}
@@ -50,23 +50,23 @@ export default function DosAndDontsCard({ dos = [], donts = [] }) {
 
       {/* DONTs Card */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(248,113,113,0.08), rgba(248,113,113,0.02))',
-        border: '1.5px solid rgba(248,113,113,0.3)',
-        borderRadius: 16,
+        background: '#fef2f2',
+        border: '1px solid #fecaca',
+        borderRadius: 14,
         padding: '1.15rem',
       }}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8,
           marginBottom: 10,
-          color: '#f87171',
+          color: '#b91c1c',
           fontWeight: 800,
           fontSize: '0.88rem',
         }}>
           <span style={{
-            background: 'rgba(248,113,113,0.2)',
-            width: 26, height: 26, borderRadius: '50%',
+            background: '#fee2e2',
+            width: 24, height: 24, borderRadius: '50%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '0.8rem',
+            fontSize: '0.78rem',
           }}>✕</span>
           <span>Yang Harus Dihindari (DON'Ts)</span>
         </div>
@@ -75,10 +75,10 @@ export default function DosAndDontsCard({ dos = [], donts = [] }) {
           {donts.map((item, idx) => (
             <li key={idx} style={{
               display: 'flex', alignItems: 'flex-start', gap: 8,
-              fontSize: '0.8rem', color: 'var(--color-text-2)',
+              fontSize: '0.82rem', color: '#1e293b',
               lineHeight: 1.5,
             }}>
-              <span style={{ color: '#f87171', fontWeight: 800, minWidth: 16 }}>•</span>
+              <span style={{ color: '#dc2626', fontWeight: 800, minWidth: 16 }}>•</span>
               <span>{item}</span>
             </li>
           ))}
