@@ -59,6 +59,16 @@ export default function Home() {
             <span className={`pill ${isDA ? 'pill-da' : 'pill-ds'}`}>
               {modeEmoji} {modeLabel}
             </span>
+            <Link to="/generate" className="btn" style={{
+              padding: '6px 14px',
+              fontSize: '0.78rem',
+              background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
+              color: '#fff',
+              boxShadow: '0 0 12px rgba(236,72,153,0.3)',
+              fontWeight: 800,
+            }}>
+              ⚡ Generate Kasus
+            </Link>
             <Link to="/image" className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: '0.78rem' }}>
               📷 Input Gambar
             </Link>
@@ -105,31 +115,50 @@ export default function Home() {
 
           {/* Quick Action Buttons */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
-            <button
-              onClick={handleRandomCase}
+            <Link
+              to="/generate"
               className="btn"
               style={{
                 background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
                 color: '#fff',
-                padding: '0.85rem 1.75rem',
-                fontSize: '0.95rem',
-                borderRadius: 14,
-                boxShadow: '0 4px 24px rgba(236,72,153,0.35)',
+                padding: '0.9rem 2rem',
+                fontSize: '1rem',
+                fontWeight: 900,
+                borderRadius: 16,
+                boxShadow: '0 4px 24px rgba(236,72,153,0.4)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
               }}
             >
-              🎲 Generate / Acak Studi Kasus
+              <span>⚡</span>
+              <span>GENERATE KASUS BARU!</span>
+            </Link>
+
+            <button
+              onClick={handleRandomCase}
+              className="btn btn-ghost"
+              style={{
+                padding: '0.9rem 1.6rem',
+                fontSize: '0.92rem',
+                borderRadius: 16,
+                fontWeight: 700,
+              }}
+            >
+              🎲 Acak dari Bank Soal
             </button>
 
             <Link
               to="/image"
               className="btn btn-ghost"
               style={{
-                padding: '0.85rem 1.75rem',
-                fontSize: '0.95rem',
-                borderRadius: 14,
+                padding: '0.9rem 1.6rem',
+                fontSize: '0.92rem',
+                borderRadius: 16,
+                fontWeight: 700,
               }}
             >
-              📷 Input Gambar Grafik Sendiri
+              📷 Input Gambar Grafik
             </Link>
           </div>
         </div>
@@ -145,13 +174,46 @@ export default function Home() {
           <PerspectiveSelector />
         </div>
 
-        {/* ── 2 MODE NAVIGATION CARDS ── */}
+        {/* ── 3 NAVIGATION CARDS ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
           gap: 12,
           marginBottom: '2rem',
         }}>
+          {/* Card 1: Live Generator */}
+          <Link
+            to="/generate"
+            style={{
+              textDecoration: 'none',
+              background: 'linear-gradient(135deg, rgba(236,72,153,0.12), rgba(139,92,246,0.04))',
+              border: '1.5px solid rgba(236,72,153,0.35)',
+              borderRadius: 18,
+              padding: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 14,
+              transition: 'all 0.2s',
+            }}
+          >
+            <div style={{
+              width: 48, height: 48, borderRadius: 12,
+              background: 'rgba(236,72,153,0.2)',
+              color: '#f472b6',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '1.5rem',
+            }}>⚡</div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#fff', marginBottom: 2 }}>
+                Generator Kasus Real-Time →
+              </div>
+              <div style={{ fontSize: '0.74rem', color: 'var(--color-text-3)' }}>
+                Bikin grafik baru tanpa batas + formula acak & kunjaw instan.
+              </div>
+            </div>
+          </Link>
+
+          {/* Card 2: Bank Soal */}
           <div style={{
             background: 'var(--color-bg-card)',
             border: '1.5px solid var(--color-border)',
@@ -169,15 +231,16 @@ export default function Home() {
               fontSize: '1.5rem',
             }}>📚</div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: 2 }}>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--color-text-1)', marginBottom: 2 }}>
                 Bank Soal Terkurasi
               </div>
               <div style={{ fontSize: '0.74rem', color: 'var(--color-text-3)' }}>
-                Tersedia kasus Finance, Marketing, SaaS, E-Commerce, Healthcare, & Medsos.
+                Kasus Finance, E-Com, Marketing, SaaS, Healthcare, Medsos.
               </div>
             </div>
           </div>
 
+          {/* Card 3: Image Input */}
           <Link
             to="/image"
             style={{
@@ -201,10 +264,10 @@ export default function Home() {
             }}>📷</div>
             <div>
               <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--color-text-1)', marginBottom: 2 }}>
-                Input Gambar Grafik Random →
+                Input Gambar Grafik →
               </div>
               <div style={{ fontSize: '0.74rem', color: 'var(--color-text-3)' }}>
-                Paste screenshot (Ctrl+V) atau upload gambar untuk langsung dibedah.
+                Paste screenshot (Ctrl+V) / upload gambar grafik dari luar.
               </div>
             </div>
           </Link>

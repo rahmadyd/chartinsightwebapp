@@ -6,6 +6,7 @@ import CasePage from './pages/CasePage';
 import GlossaryPage from './pages/GlossaryPage';
 import InputMode from './pages/InputMode';
 import ImageUploadMode from './pages/ImageUploadMode';
+import GeneratePage from './pages/GeneratePage';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/generate" element={<GeneratePage />} />
           <Route path="/case/:id" element={<CasePage />} />
           <Route path="/glossary" element={<GlossaryPage />} />
           <Route path="/input" element={<InputMode />} />
