@@ -24,6 +24,8 @@ export default function Home() {
   // Currently displayed case
   const [currentCase, setCurrentCase] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [caseSource, setCaseSource] = useState('');
 
   // Generate on initial load
   useEffect(() => {
@@ -36,10 +38,45 @@ export default function Home() {
     handleGenerateCase(newSeed, selectedCategory, complexity);
   };
 
-  const handleGenerateCase = (seed = seedInput, cat = selectedCategory, comp = complexity) => {
+  const handleGenerateCase = async (seed = seedInput, cat = selectedCategory, comp = complexity) => {
     const numSeed = parseInt(seed, 10) || 482910;
+    setLoading(true);
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout
+
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category: cat,
+          complexity: comp,
+          seed: numSeed,
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const aiCase = await res.json();
+        if (aiCase.title && (aiCase.values || aiCase.scatterData)) {
+          setCurrentCase(aiCase);
+          setCaseSource(aiCase.source || 'Groq AI');
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('Groq API belum merespons atau offline, menggunakan procedural generator...', err);
+    }
+
+    // Fallback if Groq API not reachable or offline
     const generated = generateSeededCase(cat, numSeed, comp);
     setCurrentCase(generated);
+    setCaseSource('Mesin Prosedural (Fallback)');
+    setLoading(false);
   };
 
   const handleCopyMarkdown = () => {
@@ -226,35 +263,41 @@ ${currentCase.donts.map(d => `- ${d}`).join('\n')}
 
           {/* WIDE CLEAN BUTTON (Persis Seperti Tombol "Hasilkan Studi Kasus MySQL" di Screenshot) */}
           <button
-            onClick={() => handleGenerateCase(seedInput, selectedCategory, complexity)}
+            onClick={() => !loading && handleGenerateCase(seedInput, selectedCategory, complexity)}
+            disabled={loading}
             style={{
               width: '100%',
               padding: '0.85rem 1.5rem',
               borderRadius: 12,
               border: '1px solid #cbd5e1',
-              background: '#f1f5f9',
+              background: loading ? '#e2e8f0' : '#f1f5f9',
               color: '#0f172a',
               fontSize: '0.98rem',
               fontWeight: 800,
-              cursor: 'pointer',
+              cursor: loading ? 'not-allowed' : 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 8,
               transition: 'all 0.15s ease',
               boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
+              opacity: loading ? 0.75 : 1,
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.background = '#e2e8f0';
-              e.currentTarget.style.borderColor = '#94a3b8';
+              if (!loading) {
+                e.currentTarget.style.background = '#e2e8f0';
+                e.currentTarget.style.borderColor = '#94a3b8';
+              }
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.background = '#f1f5f9';
-              e.currentTarget.style.borderColor = '#cbd5e1';
+              if (!loading) {
+                e.currentTarget.style.background = '#f1f5f9';
+                e.currentTarget.style.borderColor = '#cbd5e1';
+              }
             }}
           >
-            <span style={{ fontSize: '1.15rem' }}>✨</span>
-            <span>Hasilkan Studi Kasus Grafik</span>
+            <span style={{ fontSize: '1.15rem' }}>{loading ? '⏳' : '✨'}</span>
+            <span>{loading ? 'Sedang Menghasilkan Studi Kasus dengan Groq AI...' : 'Hasilkan Studi Kasus Grafik'}</span>
           </button>
         </div>
 
@@ -270,13 +313,18 @@ ${currentCase.donts.map(d => `- ${d}`).join('\n')}
           {/* Header Kasus */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10, marginBottom: 12 }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
                 <span className="pill pill-da">
                   🏷️ {currentCase.category}
                 </span>
                 <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>
                   Seed #{currentCase.seed}
                 </span>
+                {caseSource && (
+                  <span className="pill pill-green" style={{ fontSize: '0.68rem' }}>
+                    ⚡ {caseSource}
+                  </span>
+                )}
               </div>
               <h1 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', lineHeight: 1.3 }}>
                 {currentCase.title}
