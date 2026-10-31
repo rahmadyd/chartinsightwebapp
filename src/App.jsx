@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CasePage from './pages/CasePage';
 import GlossaryPage from './pages/GlossaryPage';
 import InputMode from './pages/InputMode';
+import ImageUploadMode from './pages/ImageUploadMode';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/case/:id" element={<CasePage />} />
           <Route path="/glossary" element={<GlossaryPage />} />
           <Route path="/input" element={<InputMode />} />
+          <Route path="/image" element={<ImageUploadMode />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

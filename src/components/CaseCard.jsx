@@ -1,108 +1,117 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { getCompletedCases } from '../utils/storage';
 
 const CHART_ICON = { line: '📈', bar: '📊', scatter: '🔵', histogram: '📉' };
-const LEVEL_STYLE = {
-  pemula:   { bg: 'rgba(52,211,153,0.12)', color: '#34d399', border: 'rgba(52,211,153,0.3)' },
-  menengah: { bg: 'rgba(251,191,36,0.12)', color: '#fbbf24', border: 'rgba(251,191,36,0.3)' },
-  lanjutan: { bg: 'rgba(248,113,113,0.12)', color: '#f87171', border: 'rgba(248,113,113,0.3)' },
+
+const CATEGORY_COLORS = {
+  'Finance': { bg: 'rgba(56,189,248,0.14)', text: '#38bdf8', border: 'rgba(56,189,248,0.35)' },
+  'E-Commerce': { bg: 'rgba(251,146,60,0.14)', text: '#fb923c', border: 'rgba(251,146,60,0.35)' },
+  'Digital Marketing': { bg: 'rgba(244,63,94,0.14)', text: '#f43f5e', border: 'rgba(244,63,94,0.35)' },
+  'SaaS & Product': { bg: 'rgba(168,85,247,0.14)', text: '#c084fc', border: 'rgba(168,85,247,0.35)' },
+  'Social Media': { bg: 'rgba(236,72,153,0.14)', text: '#f472b6', border: 'rgba(236,72,153,0.35)' },
+  'Healthcare': { bg: 'rgba(52,211,153,0.14)', text: '#34d399', border: 'rgba(52,211,153,0.35)' },
 };
 
-export default function CaseCard({ caseData, completed }) {
+export default function CaseCard({ caseData }) {
   const { isDA } = useApp();
   const accentColor = isDA ? 'var(--color-da)' : 'var(--color-ds)';
-  const glowColor = isDA ? 'var(--color-da-glow)' : 'var(--color-ds-glow)';
-  const lvl = LEVEL_STYLE[caseData.level] || LEVEL_STYLE.pemula;
+  const catStyle = CATEGORY_COLORS[caseData.category] || CATEGORY_COLORS['Finance'];
 
   return (
     <Link
       to={`/case/${caseData.id}`}
       style={{
-        display: 'block',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         textDecoration: 'none',
         background: 'var(--color-bg-card)',
-        border: completed ? `2px solid ${accentColor}` : '1.5px solid var(--color-border)',
-        borderRadius: 16,
-        padding: '1rem',
+        border: '1.5px solid var(--color-border)',
+        borderRadius: 18,
+        padding: '1.25rem',
         transition: 'all 0.2s',
         position: 'relative',
         overflow: 'hidden',
-        boxShadow: completed ? `0 0 16px ${glowColor}` : 'none',
+        height: '100%',
       }}
       className="card-hover-effect"
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = accentColor;
-        e.currentTarget.style.background = 'var(--color-bg-raised)';
+        e.currentTarget.style.transform = 'translateY(-3px)';
+        e.currentTarget.style.boxShadow = `0 10px 30px ${isDA ? 'rgba(79,158,255,0.15)' : 'rgba(191,127,255,0.15)'}`;
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.borderColor = completed ? accentColor : 'var(--color-border)';
-        e.currentTarget.style.background = 'var(--color-bg-card)';
+        e.currentTarget.style.borderColor = 'var(--color-border)';
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
       }}
     >
-      {/* Done badge */}
-      {completed && (
-        <div style={{
-          position: 'absolute', top: 10, right: 10,
-          width: 22, height: 22, borderRadius: '50%',
-          background: 'rgba(52,211,153,0.2)',
-          border: '1.5px solid rgba(52,211,153,0.5)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '0.7rem', color: 'var(--color-success)',
-        }}>✓</div>
-      )}
-
-      {/* Icon + Chart type */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-        <div style={{
-          width: 40, height: 40,
-          background: 'var(--color-bg-raised)',
-          borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '1.3rem',
-        }}>
-          {CHART_ICON[caseData.chartType] || '📊'}
-        </div>
-        <div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--color-text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            {caseData.chartType} chart
-          </div>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center',
-            fontSize: '0.66rem', fontWeight: 700,
-            padding: '2px 8px', borderRadius: 99,
-            background: lvl.bg, color: lvl.color,
-            border: `1px solid ${lvl.border}`,
+      <div>
+        {/* Top Badges */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <span style={{
+            background: catStyle.bg,
+            color: catStyle.text,
+            border: `1px solid ${catStyle.border}`,
+            padding: '2px 8px',
+            borderRadius: 99,
+            fontSize: '0.68rem',
+            fontWeight: 800,
+            letterSpacing: '0.04em',
           }}>
-            {caseData.level}
-          </div>
+            {caseData.category}
+          </span>
+
+          <span style={{
+            display: 'flex', alignItems: 'center', gap: 4,
+            fontSize: '0.72rem', color: 'var(--color-text-3)', fontWeight: 600,
+          }}>
+            {CHART_ICON[caseData.chartType] || '📊'} {caseData.chartType.toUpperCase()}
+          </span>
         </div>
+
+        {/* Title */}
+        <h3 style={{
+          fontWeight: 800,
+          fontSize: '0.98rem',
+          color: 'var(--color-text-1)',
+          marginBottom: 8,
+          lineHeight: 1.35,
+        }}>
+          {caseData.title}
+        </h3>
+
+        {/* Problem Statement Snippet */}
+        <p style={{
+          fontSize: '0.78rem',
+          color: 'var(--color-text-2)',
+          lineHeight: 1.5,
+          marginBottom: 12,
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+        }}>
+          {caseData.problemStatement || caseData.context}
+        </p>
       </div>
 
-      {/* Title */}
+      {/* Bottom Kunjaw Indicator */}
       <div style={{
-        fontWeight: 700, fontSize: '0.875rem',
-        color: 'var(--color-text-1)', marginBottom: 6,
-        lineHeight: 1.4,
+        borderTop: '1px solid var(--color-border)',
+        paddingTop: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}>
-        {caseData.title}
+        <span style={{ fontSize: '0.72rem', color: '#38bdf8', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+          💡 Kunjaw & Reasoning
+        </span>
+        <span style={{ fontSize: '0.8rem', color: accentColor, fontWeight: 800 }}>
+          Buka Kasus →
+        </span>
       </div>
-
-      {/* Context snippet */}
-      <div style={{
-        fontSize: '0.75rem', color: 'var(--color-text-3)',
-        lineHeight: 1.5,
-        display: '-webkit-box',
-        WebkitLineClamp: 2,
-        WebkitBoxOrient: 'vertical',
-        overflow: 'hidden',
-      }}>
-        {caseData.context}
-      </div>
-
-      {/* Arrow */}
-      <div style={{ textAlign: 'right', marginTop: 10, color: 'var(--color-text-3)', fontSize: '0.8rem' }}>→</div>
     </Link>
   );
 }

@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CaseCard from '../components/CaseCard';
 import PerspectiveSelector from '../components/PerspectiveSelector';
 import casesData from '../data/cases.json';
-import { getCompletedCases } from '../utils/storage';
 import { useApp } from '../context/AppContext';
 
-const FILTERS = ['Semua', 'line', 'bar', 'scatter', 'pemula', 'menengah'];
+const CATEGORIES = [
+  'Semua Kategori',
+  'Finance',
+  'E-Commerce',
+  'Digital Marketing',
+  'SaaS & Product',
+  'Social Media',
+  'Healthcare',
+];
 
 export default function Home() {
-  const { perspectiveMode, chartMode, setChartMode, isDA, modeLabel, modeEmoji } = useApp();
-  const [filter, setFilter] = useState('Semua');
-  const [completed, setCompleted] = useState([]);
+  const { isDA, modeLabel, modeEmoji } = useApp();
+  const [selectedCategory, setSelectedCategory] = useState('Semua Kategori');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setCompleted(getCompletedCases());
-  }, []);
+  const handleRandomCase = () => {
+    const randomCase = casesData[Math.floor(Math.random() * casesData.length)] || casesData[0];
+    navigate(`/case/${randomCase.id}`);
+  };
 
-  const filtered = filter === 'Semua'
+  const filteredCases = selectedCategory === 'Semua Kategori'
     ? casesData
-    : casesData.filter(c => c.chartType === filter || c.level === filter);
-
-  const pct = casesData.length > 0
-    ? Math.round((completed.length / casesData.length) * 100)
-    : 0;
+    : casesData.filter(c => c.category === selectedCategory);
 
   const accentColor = isDA ? 'var(--color-da)' : 'var(--color-ds)';
-  const glowColor = isDA ? 'var(--color-da-glow)' : 'var(--color-ds-glow)';
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg-base)' }}>
@@ -35,234 +37,240 @@ export default function Home() {
       {/* ── STICKY HEADER ── */}
       <header style={{
         position: 'sticky', top: 0, zIndex: 40,
-        background: 'rgba(7,9,15,0.85)',
+        background: 'rgba(7,9,15,0.9)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--color-border)',
         padding: '0.75rem 1rem',
       }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ maxWidth: 1050, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: '1.4rem' }}>🧪</span>
-            <span style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.01em' }}>
-              Chart Insight Lab
-            </span>
+            <span style={{ fontSize: '1.5rem' }}>🧪</span>
+            <div>
+              <span style={{ fontWeight: 900, fontSize: '1.05rem', letterSpacing: '-0.02em', color: 'var(--color-text-1)' }}>
+                Chart Insight Lab
+              </span>
+              <span style={{ display: 'block', fontSize: '0.65rem', color: 'var(--color-text-3)', fontWeight: 600 }}>
+                Bank Soal & Kunjaw Penalaran Grafik
+              </span>
+            </div>
           </div>
+
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span className={`pill ${isDA ? 'pill-da' : 'pill-ds'}`}>
               {modeEmoji} {modeLabel}
             </span>
-            <Link to="/glossary" style={{
-              fontSize: '0.78rem', color: 'var(--color-text-3)',
-              textDecoration: 'none', padding: '6px 12px',
-              background: 'var(--color-bg-raised)',
-              borderRadius: 8, border: '1px solid var(--color-border)',
-              transition: 'color 0.2s',
-            }}>
+            <Link to="/image" className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: '0.78rem' }}>
+              📷 Input Gambar
+            </Link>
+            <Link to="/glossary" className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: '0.78rem' }}>
               📖 Glosarium
             </Link>
           </div>
         </div>
       </header>
 
-      <main style={{ maxWidth: 900, margin: '0 auto', padding: '2rem 1rem 4rem' }}>
+      <main style={{ maxWidth: 1050, margin: '0 auto', padding: '2.5rem 1rem 5rem' }}>
 
-        {/* ── HERO ── */}
-        <div className="anim-fade-up" style={{ marginBottom: '2rem', textAlign: 'center' }}>
-          <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 900, lineHeight: 1.15, marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-            Belajar Membaca Grafik
+        {/* ── HERO SECTION ── */}
+        <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            background: 'var(--color-bg-raised)', border: '1px solid var(--color-border)',
+            padding: '4px 14px', borderRadius: 99, fontSize: '0.75rem', fontWeight: 700,
+            color: 'var(--color-text-2)', marginBottom: 14,
+          }}>
+            ⚡ Bukan Ujian atau Tugas • Murni Membuka Wawasan Analisis Data
+          </div>
+
+          <h1 style={{
+            fontSize: 'clamp(1.85rem, 4.5vw, 2.75rem)',
+            fontWeight: 900,
+            lineHeight: 1.15,
+            marginBottom: '0.75rem',
+            letterSpacing: '-0.03em',
+          }}>
+            Bank Studi Kasus & <span style={{ color: accentColor }}>Kunci Jawaban Grafik</span>
           </h1>
-          <p style={{ color: 'var(--color-text-2)', fontSize: '0.95rem', maxWidth: 480, margin: '0 auto' }}>
-            Jawab 4 pertanyaan analisis, bandingkan dengan jawaban contoh,
-            dan lihat bedanya sudut pandang <strong>DA</strong> vs <strong>DS</strong>.
+
+          <p style={{
+            color: 'var(--color-text-2)',
+            fontSize: '0.98rem',
+            maxWidth: 580,
+            margin: '0 auto 1.75rem',
+            lineHeight: 1.6,
+          }}>
+            Lihat grafik, langsung baca <strong>kunci jawaban</strong> dan <strong>alasan logis (reasoning)</strong>-nya.
+            Lengkap dengan tips <strong>DOs & DON'Ts</strong> serta rekomendasi <strong>algoritma Data Science</strong>!
           </p>
+
+          {/* Quick Action Buttons */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <button
+              onClick={handleRandomCase}
+              className="btn"
+              style={{
+                background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
+                color: '#fff',
+                padding: '0.85rem 1.75rem',
+                fontSize: '0.95rem',
+                borderRadius: 14,
+                boxShadow: '0 4px 24px rgba(236,72,153,0.35)',
+              }}
+            >
+              🎲 Generate / Acak Studi Kasus
+            </button>
+
+            <Link
+              to="/image"
+              className="btn btn-ghost"
+              style={{
+                padding: '0.85rem 1.75rem',
+                fontSize: '0.95rem',
+                borderRadius: 14,
+              }}
+            >
+              📷 Input Gambar Grafik Sendiri
+            </Link>
+          </div>
         </div>
 
-        {/* ── PERSPECTIVE SELECTOR ── */}
+        {/* ── PERSPECTIVE SELECTOR (DA VS DS) ── */}
         <div style={{
           background: 'var(--color-bg-card)',
           border: '1.5px solid var(--color-border)',
           borderRadius: 20,
-          padding: '1.5rem',
-          marginBottom: '1.5rem',
+          padding: '1.25rem',
+          marginBottom: '2rem',
         }} className="anim-fade-up">
           <PerspectiveSelector />
         </div>
 
-        {/* ── CHART MODE SELECTOR ── */}
+        {/* ── 2 MODE NAVIGATION CARDS ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: 12,
-          marginBottom: '1.5rem',
-        }} className="anim-fade-up">
-          {/* GENERATE MODE */}
-          <button
-            onClick={() => setChartMode('generate')}
-            style={{
-              padding: '1.25rem',
-              borderRadius: 16,
-              border: chartMode === 'generate'
-                ? `2.5px solid ${accentColor}`
-                : '2px solid var(--color-border)',
-              background: chartMode === 'generate'
-                ? `linear-gradient(135deg, ${glowColor}, transparent)`
-                : 'var(--color-bg-card)',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'all 0.2s',
-              boxShadow: chartMode === 'generate' ? `0 0 20px ${glowColor}` : 'none',
-            }}
-          >
-            <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>✨</div>
-            <div style={{
-              fontWeight: 800, fontSize: '0.95rem', marginBottom: 4,
-              color: chartMode === 'generate' ? accentColor : 'var(--color-text-1)',
-            }}>
-              Generate Mode
-            </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--color-text-3)', lineHeight: 1.5 }}>
-              Pilih kasus dari koleksi yang sudah ada
-            </div>
-          </button>
-
-          {/* INPUT MODE */}
-          <button
-            onClick={() => { setChartMode('input'); navigate('/input'); }}
-            style={{
-              padding: '1.25rem',
-              borderRadius: 16,
-              border: chartMode === 'input'
-                ? `2.5px solid ${accentColor}`
-                : '2px solid var(--color-border)',
-              background: chartMode === 'input'
-                ? `linear-gradient(135deg, ${glowColor}, transparent)`
-                : 'var(--color-bg-card)',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'all 0.2s',
-              boxShadow: chartMode === 'input' ? `0 0 20px ${glowColor}` : 'none',
-            }}
-          >
-            <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>📥</div>
-            <div style={{
-              fontWeight: 800, fontSize: '0.95rem', marginBottom: 4,
-              color: chartMode === 'input' ? accentColor : 'var(--color-text-1)',
-            }}>
-              Input Grafik Mode
-            </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--color-text-3)', lineHeight: 1.5 }}>
-              Input data grafik sendiri untuk dianalisis
-            </div>
-          </button>
-        </div>
-
-        {/* ── 4 PERTANYAAN REFERENCE ── */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 8,
-          marginBottom: '1.5rem',
+          marginBottom: '2rem',
         }}>
-          {[
-            { n: 'Q1', e: '📌', t: 'Grafik apa?', s: 'Jenis · sumbu · satuan' },
-            { n: 'Q2', e: '📈', t: 'Bentuknya?', s: 'Tren · pola · outlier' },
-            { n: 'Q3', e: '🤔', t: 'Kenapa?', s: 'Hipotesis penyebab' },
-            { n: 'Q4', e: '🎯', t: 'Ngapain?', s: 'Rekomendasi aksi' },
-          ].map(q => (
-            <div key={q.n} style={{
-              background: 'var(--color-bg-card)',
-              border: '1px solid var(--color-border)',
-              borderRadius: 12,
-              padding: '0.75rem',
-              display: 'flex', gap: 10, alignItems: 'flex-start',
-            }}>
-              <span style={{
-                minWidth: 28, height: 28,
-                background: 'var(--color-bg-raised)',
-                borderRadius: 8,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.75rem', fontWeight: 800, color: accentColor,
-              }}>{q.n}</span>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '0.82rem', marginBottom: 2 }}>{q.e} {q.t}</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--color-text-3)' }}>{q.s}</div>
+          <div style={{
+            background: 'var(--color-bg-card)',
+            border: '1.5px solid var(--color-border)',
+            borderRadius: 18,
+            padding: '1.25rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 14,
+          }}>
+            <div style={{
+              width: 48, height: 48, borderRadius: 12,
+              background: 'rgba(56,189,248,0.15)',
+              color: '#38bdf8',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '1.5rem',
+            }}>📚</div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: 2 }}>
+                Bank Soal Terkurasi
+              </div>
+              <div style={{ fontSize: '0.74rem', color: 'var(--color-text-3)' }}>
+                Tersedia kasus Finance, Marketing, SaaS, E-Commerce, Healthcare, & Medsos.
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* ── PROGRESS ── */}
-        <div style={{
-          background: 'var(--color-bg-card)',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: 16,
-          padding: '1rem 1.25rem',
-          marginBottom: '1.5rem',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>
-              🏆 Progress Belajar
-            </span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--color-text-3)' }}>
-              <span style={{ color: accentColor, fontWeight: 700 }}>{completed.length}</span>
-              /{casesData.length} kasus · {pct}%
-            </span>
           </div>
-          <div className="progress-track">
-            <div
-              className={isDA ? 'progress-fill-da' : 'progress-fill-ds'}
-              style={{ width: `${pct}%` }}
-            />
+
+          <Link
+            to="/image"
+            style={{
+              textDecoration: 'none',
+              background: 'linear-gradient(135deg, rgba(168,85,247,0.12), rgba(168,85,247,0.02))',
+              border: '1.5px solid rgba(168,85,247,0.3)',
+              borderRadius: 18,
+              padding: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 14,
+              transition: 'all 0.2s',
+            }}
+          >
+            <div style={{
+              width: 48, height: 48, borderRadius: 12,
+              background: 'rgba(168,85,247,0.2)',
+              color: '#c084fc',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '1.5rem',
+            }}>📷</div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--color-text-1)', marginBottom: 2 }}>
+                Input Gambar Grafik Random →
+              </div>
+              <div style={{ fontSize: '0.74rem', color: 'var(--color-text-3)' }}>
+                Paste screenshot (Ctrl+V) atau upload gambar untuk langsung dibedah.
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        {/* ── CATEGORY FILTER TABS ── */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-text-3)', marginBottom: 8 }}>
+            🏷️ Filter Berdasarkan Kategori:
           </div>
-          {pct === 100 && (
-            <p style={{ color: 'var(--color-success)', fontSize: '0.78rem', marginTop: 8, fontWeight: 600 }}>
-              🎉 Semua kasus selesai! Luar biasa.
-            </p>
-          )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {CATEGORIES.map(cat => {
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: 99,
+                    border: isActive ? `1.5px solid ${accentColor}` : '1.5px solid var(--color-border)',
+                    background: isActive ? (isDA ? 'var(--color-da-glow)' : 'var(--color-ds-glow)') : 'var(--color-bg-card)',
+                    color: isActive ? accentColor : 'var(--color-text-2)',
+                    fontSize: '0.78rem',
+                    fontWeight: isActive ? 800 : 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* ── FILTER ── */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: '1rem' }}>
-          {FILTERS.map(f => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              style={{
-                padding: '5px 14px',
-                borderRadius: 99,
-                border: filter === f ? `1.5px solid ${accentColor}` : '1.5px solid var(--color-border)',
-                background: filter === f ? (isDA ? 'var(--color-da-glow)' : 'var(--color-ds-glow)') : 'var(--color-bg-raised)',
-                color: filter === f ? accentColor : 'var(--color-text-3)',
-                fontSize: '0.78rem',
-                fontWeight: filter === f ? 700 : 500,
-                cursor: 'pointer',
-                transition: 'all 0.15s',
-              }}
-            >
-              {f.charAt(0).toUpperCase() + f.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        {/* ── CASE GRID ── */}
+        {/* ── CASE CARDS GRID ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-          gap: 12,
+          gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
+          gap: 14,
         }}>
-          {filtered.map((c, i) => (
-            <div key={c.id} className="anim-fade-up" style={{ animationDelay: `${i * 0.04}s` }}>
-              <CaseCard caseData={c} completed={completed.includes(c.id)} />
+          {filteredCases.map(c => (
+            <div key={c.id} className="anim-fade-up">
+              <CaseCard caseData={c} />
             </div>
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {filteredCases.length === 0 && (
           <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--color-text-3)' }}>
-            Tidak ada kasus untuk filter ini.
+            Belum ada kasus untuk kategori ini.
           </div>
         )}
       </main>
+
+      {/* ── FOOTER ── */}
+      <footer style={{
+        borderTop: '1px solid var(--color-border)',
+        padding: '2rem 1rem',
+        textAlign: 'center',
+        fontSize: '0.78rem',
+        color: 'var(--color-text-3)',
+      }}>
+        🧪 Chart Insight Lab — Dirancang untuk membuka wawasan visualisasi data secara santai dan aplikatif.
+      </footer>
     </div>
   );
 }

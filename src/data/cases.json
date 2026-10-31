@@ -1,217 +1,274 @@
 [
   {
     "id": "reels-views-spike",
-    "title": "Lonjakan Views Reels",
-    "level": "pemula",
+    "title": "Lonjakan Views Reels: Viral atau Kebetulan?",
+    "category": "Social Media",
+    "level": "Pemula",
     "chartType": "line",
-    "context": "Views Reels sebuah akun konten selama 8 minggu. Akun ini biasanya posting 2-3 konten per minggu.",
-    "xLabel": "Minggu",
-    "yLabel": "Views",
+    "problemStatement": "Akun brand sedang mengevaluasi performa konten Reels selama 8 minggu terakhir. Di minggu ke-5 ada lonjakan drastis, tapi setelah itu views turun kembali ke angka awal. Manajemen bertanya: apakah konten M5 harus dijadikan standar target mingguan ke depan?",
+    "context": "Views Reels mingguan sebuah akun media sosial dari M1 sampai M8 (posting rata-rata 2-3 konten per minggu).",
+    "xLabel": "Minggu (Time Frame)",
+    "yLabel": "Jumlah Views Reels",
     "labels": ["M1","M2","M3","M4","M5","M6","M7","M8"],
-    "values": [1200,1350,1300,1500,4800,2100,1700,1650],
-    "sampleAnswers": {
-      "q1": "Line chart yang mengukur jumlah views Reels per minggu selama 8 minggu. Sumbu X = minggu (M1-M8), sumbu Y = jumlah views, tidak ada satuan khusus (views = unit sendiri).",
-      "q2": "Data relatif stabil di M1-M4 (kisaran 1200-1500), lalu melonjak tajam di M5 (4800 = +220% dari M4), kemudian turun kembali ke kisaran normal di M6-M8.",
-      "da": {
-        "q3": "Kemungkinan besar ada satu konten viral di M5, mungkin ikut tren atau di-share oleh akun besar. Lonjakan ini tidak berkelanjutan.",
-        "q4": "Analisis konten apa yang diposting di M5 (topik, format, waktu posting). Coba reproduksi formula konten tersebut. Jangan jadikan M5 sebagai baseline target views."
-      },
-      "ds": {
-        "q3": "M5 adalah outlier signifikan. Perlu dihitung apakah 4800 benar-benar di luar batas fluktuasi normal (mean ± 2-3 SD dari M1-M4, M6-M8).",
-        "q4": "Gunakan median sebagai ukuran sentral, bukan mean (karena mean terdistorsi oleh outlier M5). Kumpulkan lebih banyak data sebelum membuat keputusan berbasis M5 saja."
-      }
+    "values": [1200, 1350, 1300, 1500, 4800, 2100, 1700, 1650],
+    "quickAnswer": "Lonjakan di M5 adalah anomali sesaat (outlier/viralitas insidental), bukan baseline pertumbuhan permanen. Jangan jadikan 4.800 sebagai target mingguan baru.",
+    "detailedReasoning": "Grafik menunjukkan baseline yang stabil di 1.200-1.500 views (M1-M4). Lonjakan di M5 (+220%) melonjak drastis lalu mengalami mean reversion di M6-M8 ke kisaran 1.650-2.100. Ini pola khas konten viral satu kali (dipicu algoritma Explore atau share akun besar), bukan pergeseran audiens organik permanen.",
+    "dataAnalyst": {
+      "insight": "M5 kemungkinan memuat audio trending, topik kontroversial/relatable, atau di-repost akun influencer. Namun retensi penonton baru tidak bertahan lama.",
+      "recommendations": "1. Bedah formula video M5 (hook 3 detik pertama, durasi, sound, CTA).\n2. Buat eksperimen batch 3 video dengan format serupa di minggu depan.\n3. Jangan menaikkan KPI mingguan ke 4.800 karena akan mendemotivasi tim konten.",
+      "kpiMetrics": ["Average Watch Time", "Retention Rate 3s", "Shares to Views Ratio", "Follower Conversion"]
     },
-    "glossary": ["outlier", "tren", "median", "mean", "lonjakan"]
+    "dataScience": {
+      "statisticalAnalysis": "Titik M5 bernilai 4.800, terpaut lebih dari 3 Standar Deviasi (3σ) dari rata-rata baseline (μ ≈ 1.337, σ ≈ 128). Ini adalah statistik outlier ekstrem. Penggunaan 'Mean' akan bias ke atas; gunakan 'Median' (1.575) dan Interquartile Range (IQR) untuk analisis tren riil.",
+      "algorithms": [
+        "Isolation Forest (Deteksi Anomali Time Series)",
+        "Z-Score / Modified Z-Score with MAD",
+        "Prophet / Holt-Winters Exponential Smoothing"
+      ],
+      "pythonLibraries": ["scikit-learn", "statsmodels", "scipy.stats", "pandas"],
+      "nextExperiment": "Gunakan time-series changepoint detection untuk memverifikasi apakah ada structural break pada baseline traffic setelah M5."
+    },
+    "dosAndDonts": {
+      "dos": [
+        "Gunakan Median dan IQR saat data memiliki lonjakan ekstrem agar tidak tertipu rata-rata semu.",
+        "Cek metrik engagement sekunder: berapa persentase penonton M5 yang berkonversi menjadi follower.",
+        "Pisahkan analisis antara 'Organik Baseline' dan 'Viral Spike' sebelum membuat proyeksi."
+      ],
+      "donts": [
+        "JANGAN gunakan angka puncak M5 sebagai dasar target bulanan (target baseline bias).",
+        "JANGAN berasumsi semua video berikutnya akan otomatis viral tanpa mereplikasi variabel penyebabnya.",
+        "JANGAN abaikan tren M6-M8 yang ternyata sedikit lebih tinggi dari M1-M4 (+15-20% residual lift)."
+      ]
+    },
+    "glossary": ["outlier", "median", "mean", "tren", "lonjakan"]
   },
   {
-    "id": "ecom-monthly-sales",
-    "title": "Penjualan Toko Online 12 Bulan",
-    "level": "pemula",
+    "id": "ecom-seasonality-sales",
+    "title": "Tren Penjualan E-Commerce: Pertumbuhan vs Musiman",
+    "category": "E-Commerce",
+    "level": "Pemula",
     "chartType": "bar",
-    "context": "Penjualan bulanan sebuah toko online fashion selama 1 tahun (dalam juta rupiah). Toko ini sering membuat promo musiman.",
+    "problemStatement": "Toko online fashion melihat lonjakan penjualan besar di bulan November dan Desember. Tim finance mengira bisnis mereka tumbuh 3x lipat secara organik dan ingin melipatgandakan sewa gudang untuk tahun depan. Apakah keputusan ini tepat?",
+    "context": "Penjualan bulanan toko online fashion selama 1 tahun kalender (dalam satuan juta rupiah).",
     "xLabel": "Bulan",
-    "yLabel": "Penjualan (juta Rp)",
+    "yLabel": "Total Penjualan (Juta Rp)",
     "labels": ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"],
     "values": [45, 42, 48, 51, 53, 60, 55, 58, 62, 65, 95, 120],
-    "sampleAnswers": {
-      "q1": "Bar chart yang mengukur total penjualan bulanan toko online fashion selama 12 bulan dalam satuan juta rupiah.",
-      "q2": "Penjualan cenderung naik perlahan dari Jan-Okt, kemudian melonjak drastis di Nov (+46%) dan Des (+81% dibanding Jan). Tren keseluruhan adalah naik.",
-      "da": {
-        "q3": "Lonjakan Nov-Des sangat jelas terkait musim belanja: Harbolnas 11.11 di November dan belanja akhir tahun/Natal di Desember. Ini pola musiman yang normal untuk e-commerce.",
-        "q4": "Rencanakan stok dan promosi lebih awal untuk kuartal 4. Pelajari apa yang membuat Des jauh lebih tinggi dari Nov—apakah ada kampanye spesial?"
-      },
-      "ds": {
-        "q3": "Ada dua pola: (1) tren naik jangka panjang (growth organik), dan (2) musiman akhir tahun. Keduanya perlu dipisahkan untuk analisis yang akurat.",
-        "q4": "Lakukan dekomposisi time series: pisahkan komponen tren, musiman, dan residual. Forecast tahun berikutnya dengan memperhitungkan keduanya."
-      }
+    "quickAnswer": "Lonjakan Nov-Des adalah Seasonality (Harbolnas 11.11, 12.12, dan bonus akhir tahun), bukan pertumbuhan organik murni. Menyewa gudang 3x lipat sepanjang tahun berisiko boncos di bulan sepi (Jan-Feb).",
+    "detailedReasoning": "Penjualan tumbuh stabil sebesar 3-5% MoM dari Januari (45jt) ke Oktober (65jt). Lonjakan ekstrem di November (95jt) dan Desember (120jt) didorong oleh siklus belanja musiman e-commerce Indonesia. Pola ini hampir selalu mengalami koreksi tajam (January Slump) pada kuartal 1 berikutnya.",
+    "dataAnalyst": {
+      "insight": "Pertumbuhan tahunan organik sebenarnya berkisar +44% (Jan ke Okt), sedangkan sisa lonjakan di Nov-Des adalah windfall musiman festival belanja.",
+      "recommendations": "1. Gunakan opsi fulfillment 3PL fleksibel / temporary storage daripada sewa gudang permanen tahunan.\n2. Rencanakan kampanye 'Payday Promo' dan 'Clearance Sale' di Jan-Feb untuk mengantisipasi penurunan pasca liburan.\n3. Optimalkan stok SKU fast-moving 2 bulan sebelum Q4 dimulai.",
+      "kpiMetrics": ["MoM & YoY Growth Rate", "Customer Acquisition Cost (CAC)", "Inventory Turnover Ratio"]
     },
-    "glossary": ["tren", "musiman", "dekomposisi", "forecast"]
+    "dataScience": {
+      "statisticalAnalysis": "Data mengandung 2 komponen utama: Multiplicative Seasonality dan Linear Growth Trend. Memproyeksikan penjualan menggunakan regresi linear biasa tanpa dekomposisi musiman akan menghasilkan Mean Absolute Error (MAE) yang sangat tinggi di awal tahun.",
+      "algorithms": [
+        "SARIMAX (Seasonal AutoRegressive Integrated Moving Average)",
+        "Time Series Seasonal Decomposition (STL / Classical Decomposition)",
+        "Facebook Prophet dengan Custom Holiday Effect (11.11, 12.12, Libur Lebaran/Natal)"
+      ],
+      "pythonLibraries": ["statsmodels.tsa.seasonal", "prophet", "pmdarima", "scikit-learn"],
+      "nextExperiment": "Lakukan dekomposisi additive vs multiplicative time-series untuk memisahkan Trend Component, Seasonal Component, dan Residual Noise."
+    },
+    "dosAndDonts": {
+      "dos": [
+        "Bandingkan performa secara Year-over-Year (YoY) di bulan yang sama (misal Nov tahun ini vs Nov tahun lalu), bukan hanya MoM.",
+        "Perhitungkan efek promosi dan diskon: cek apakah kenaikan revenue diimbangi oleh margin profit bersih.",
+        "Siapkan cash flow buffer untuk fase penurunan tajam di kuartal pertama pasca liburan."
+      ],
+      "donts": [
+        "JANGAN memproyeksikan kapasitas biaya tetap (sewa gudang/pegawai permanen) hanya berdasarkan performa puncak musiman.",
+        "JANGAN menyamakan Gross Merchandise Value (GMV) dengan Nett Profit.",
+        "JANGAN mengabaikan retur barang yang biasanya melonjak drastis 1-2 minggu setelah promo besar."
+      ]
+    },
+    "glossary": ["musiman", "tren", "forecast", "dekomposisi"]
   },
   {
-    "id": "user-retention-cohort",
-    "title": "Retensi Pengguna Aplikasi",
-    "level": "menengah",
+    "id": "finance-npl-credit-risk",
+    "title": "Monitoring Risiko Kredit Macet (NPL) Fintech",
+    "category": "Finance",
+    "level": "Menengah",
     "chartType": "line",
-    "context": "Persentase pengguna yang masih aktif setelah mendaftar di aplikasi mobile. Data diambil dari 3 cohort bulan berbeda (Jan, Apr, Jul).",
-    "xLabel": "Minggu setelah daftar",
-    "yLabel": "Retensi (%)",
+    "problemStatement": "Perusahaan P2P Lending melihat rasio Non-Performing Loan (NPL 90 hari) naik perlahan dari 1.2% menjadi 3.8% dalam 10 bulan terakhir. Kapan batas toleransi bahaya dan apa pemicunya?",
+    "context": "Rasio NPL 90 (persentase pinjaman macet di atas 90 hari) per bulan selama 10 bulan berturut-turut.",
+    "xLabel": "Bulan",
+    "yLabel": "Rasio NPL (%)",
+    "labels": ["B1","B2","B3","B4","B5","B6","B7","B8","B9","B10"],
+    "values": [1.2, 1.3, 1.4, 1.6, 1.9, 2.3, 2.7, 3.1, 3.5, 3.8],
+    "quickAnswer": "NPL mengalami tren kenaikan eksponensial dan mendekati ambang batas regulasi OJK (5.0%). Kebijakan credit scoring saat ini terlalu longgar dan harus segera diperketat.",
+    "detailedReasoning": "Grafik menunjukkan kurva kenaikan cembung (accelerating trend). Di awal periode kenaikannya hanya +0.1% per bulan, namun di paruh kedua meningkat hingga +0.4% per bulan. Jika tidak diintervensi, NPL diproyeksikan menembus batas kritis 5% dalam 3 bulan ke depan.",
+    "dataAnalyst": {
+      "insight": "Peningkatan NPL kemungkinan dipicu oleh ekspansi akuisisi borrower baru dengan credit rating rendah demi mengejar target pencairan dana (disbursement).",
+      "recommendations": "1. Perketat cutoff credit score untuk nasabah tier menengah ke bawah.\n2. Tingkatkan intensitas early collection pada pinjaman DPD 1-30 hari.\n3. Audit channel akuisisi marketing mana yang menyumbang rasio gagal bayar tertinggi.",
+      "kpiMetrics": ["NPL 90 Days", "Roll Rate DPD 30 to 90", "Collection Efficiency Rate", "Vintage Loss Curve"]
+    },
+    "dataScience": {
+      "statisticalAnalysis": "Distribusi risiko pinjaman mengalami right-shift (kemerosotan kualitas portofolio). Perlu dilakukan analisis kurva vintage (cohort default) dan perhitungan Probability of Default (PD) dengan model logistik.",
+      "algorithms": [
+        "Logistic Regression dengan WoE (Weight of Evidence) & IV (Information Value)",
+        "XGBoost / LightGBM Credit Scoring Classifier",
+        "Survival Analysis (Cox Proportional Hazards) untuk estimasi Time-to-Default"
+      ],
+      "pythonLibraries": ["optbinning", "lightgbm", "lifelines", "scikit-learn"],
+      "nextExperiment": "Evaluasi kembali model credit scorecard saat ini menggunakan metrik KS-Statistic (Kolmogorov-Smirnov) dan ROC-AUC untuk mendeteksi population drift."
+    },
+    "dosAndDonts": {
+      "dos": [
+        "Lakukan analisis Vintage Analysis per cohort bulan pencairan agar tahu cohort mana yang 'beracun'.",
+        "Evaluasi ulang ambang batas (cutoff score) sistem persetujuan otomatis pinjaman.",
+        "Pantau makroekonomi (suku bunga, inflasi) yang mempengaruhi daya bayar peminjam."
+      ],
+      "donts": [
+        "JANGAN hanya melihat total nominal tanpa melihat rasio persentase portofolio aktif.",
+        "JANGAN melonggarkan kriteria persetujuan pinjaman baru hanya untuk menutupi rasio NPL lama (evergreening).",
+        "JANGAN mengabaikan indikator dini seperti DPD 1-7 hari sebelum menjadi DPD 90+ hari."
+      ]
+    },
+    "glossary": ["korelasi", "tren", "regresi", "cohort"]
+  },
+  {
+    "id": "marketing-ad-spend-saturation",
+    "title": "Saturasi Biaya Iklan vs CTR: Law of Diminishing Returns",
+    "category": "Digital Marketing",
+    "level": "Menengah",
+    "chartType": "scatter",
+    "problemStatement": "Tim digital ads menaikkan budget iklan dari 1 juta hingga 10 juta per kampanye. Namun CTR (Click-Through Rate) justru menurun ketika budget diperbesar. Mengapa menambah uang tidak menghasilkan efisiensi yang sama?",
+    "context": "Hasil evaluasi 25 kampanye iklan: sumbu X = pengeluaran iklan (juta Rp), sumbu Y = CTR (%).",
+    "xLabel": "Budget Iklan (Juta Rp)",
+    "yLabel": "CTR (%)",
+    "labels": [],
+    "scatterData": [
+      {"x": 0.8, "y": 4.8}, {"x": 1.2, "y": 4.2}, {"x": 1.5, "y": 3.9},
+      {"x": 2.0, "y": 3.5}, {"x": 2.5, "y": 3.1}, {"x": 3.0, "y": 2.8},
+      {"x": 3.5, "y": 2.6}, {"x": 4.0, "y": 2.2}, {"x": 4.8, "y": 2.0},
+      {"x": 5.5, "y": 1.8}, {"x": 6.2, "y": 1.5}, {"x": 7.0, "y": 1.3},
+      {"x": 8.0, "y": 1.1}, {"x": 9.0, "y": 0.9}, {"x": 10.0, "y": 0.8},
+      {"x": 1.0, "y": 4.5}, {"x": 2.2, "y": 3.4}, {"x": 3.2, "y": 2.5},
+      {"x": 5.0, "y": 1.9}, {"x": 6.8, "y": 1.4}, {"x": 8.5, "y": 1.0},
+      {"x": 1.8, "y": 3.8}, {"x": 4.2, "y": 2.1}, {"x": 7.5, "y": 1.2},
+      {"x": 9.5, "y": 0.7}
+    ],
+    "quickAnswer": "Terjadi fenomena 'Audience Fatigue' dan 'Diminishing Returns'. Budget kecil menyasar audiens inti (hyper-targeted), sedangkan budget besar terpaksa menjangkau audiens luas yang kurang relevan.",
+    "detailedReasoning": "Terlihat korelasi negatif non-linear berbentuk kurva peluruhan (decay curve). Pada budget di bawah 3 juta, CTR berada di level sehat (3.5% - 4.8%). Di atas 5 juta, CTR anjlok ke bawah 2% karena frekuensi tayang berulang ke orang yang sama atau audiens diperluas ke segmen dingin.",
+    "dataAnalyst": {
+      "insight": "Sweet spot efisiensi budget iklan berada pada rentang 2 - 3.5 juta per ad set. Menambah budget melampaui 6 juta hanya membakar uang tanpa kenaikan CTR proporsional.",
+      "recommendations": "1. Batasi budget maksimal per ad set pada kisaran 3 juta (horizontal scaling daripada vertical scaling).\n2. Ganti materi kreatif (creative fatigue) minimal setiap 2 minggu sekali.\n3. Fokuskan evaluasi pada Conversion Rate dan ROAS, bukan hanya klik semata.",
+      "kpiMetrics": ["ROAS (Return on Ad Spend)", "Ad Frequency", "Cost Per Click (CPC)", "Conversion Rate"]
+    },
+    "dataScience": {
+      "statisticalAnalysis": "Hubungan antar variabel bersifat logaritmik atau power law (bukan linear sederhana). Koefisien korelasi Pearson menunjukkan r ≈ -0.88 (korelasi negatif kuat). Transformasi log(X) diperlukan sebelum melakukan regresi.",
+      "algorithms": [
+        "Logarithmic / Polynomial Regression Curve Fitting",
+        "Marketing Mix Modeling (MMM) dengan Hill Function / Adstock Saturation Curve",
+        "Multi-Armed Bandit (MAB) untuk alokasi dinamis budget iklan"
+      ],
+      "pythonLibraries": ["scipy.optimize.curve_fit", "scikit-learn", "numpy", "matplotlib"],
+      "nextExperiment": "Terapkan Hill Function saturation model: E = (Budget^S) / (K^S + Budget^S) untuk menemukan titik diminishing returns optimal secara matematis."
+    },
+    "dosAndDonts": {
+      "dos": [
+        "Gunakan horizontal scaling (bikin banyak ad set dengan target berbeda) daripada memompa 1 ad set dengan budget jumbo.",
+        "Pantau metrik Ad Frequency: jika frekuensi > 3.0 dan CTR turun, audiens sudah jenuh melihat iklan.",
+        "Uji transformasi data non-linear (logaritmik) saat menganalisis relasi ad spend."
+      ],
+      "donts": [
+        "JANGAN menyimpulkan kampanye gagal hanya karena CTR turun; cek apakah nilai transaksinya (AOV) justru tinggi.",
+        "JANGAN menaikkan budget lebih dari 20-30% per hari pada algoritma Meta/Google karena akan mereset fase pembelajaran (learning phase).",
+        "JANGAN abaikan perbedaan platform (Google Ads vs TikTok Ads memiliki kurva saturasi berbeda)."
+      ]
+    },
+    "glossary": ["korelasi", "ctr", "outlier", "regresi", "confounder"]
+  },
+  {
+    "id": "saas-cohort-retention-decay",
+    "title": "Retensi Pengguna SaaS: Analisis Churn Titik Kritis",
+    "category": "SaaS & Product",
+    "level": "Menengah",
+    "chartType": "line",
+    "problemStatement": "Aplikasi produktivitas SaaS memiliki 10.000 pendaftar baru per bulan, namun hanya 15-24% yang masih bertahan di minggu ke-12. Mengapa drop-off terbesar terjadi di minggu pertama (W0 ke W1)?",
+    "context": "Persentase retensi cohort pengguna dari pendaftaran (W0=100%) hingga 12 minggu pemakaian (W12), membandingkan Cohort Jan, Apr, dan Jul.",
+    "xLabel": "Minggu Sejak Registrasi",
+    "yLabel": "Persentase Retensi Aktif (%)",
     "labels": ["W0","W1","W2","W3","W4","W8","W12"],
     "datasets": [
       {"label": "Cohort Jan", "values": [100, 45, 32, 28, 25, 18, 15]},
       {"label": "Cohort Apr", "values": [100, 52, 40, 35, 30, 22, 19]},
       {"label": "Cohort Jul", "values": [100, 60, 48, 42, 38, 28, 24]}
     ],
-    "sampleAnswers": {
-      "q1": "Line chart multi-series yang mengukur persentase retensi pengguna dari titik mendaftar (W0=100%) hingga W12, dibandingkan antar 3 cohort.",
-      "q2": "Semua cohort menunjukkan penurunan tajam di W0→W1, lalu melandai. Cohort Jul memiliki retensi tertinggi di semua titik. Ada tren perbaikan dari waktu ke waktu.",
-      "da": {
-        "q3": "Produk semakin membaik—fitur onboarding atau UX yang diupdate kemungkinan membuat pengguna baru lebih betah. W1 adalah titik kritis drop-off.",
-        "q4": "Fokus pada pengalaman 7 hari pertama (W0→W1). Cari tahu apa yang berbeda di Cohort Jul—kampanye akuisisi berbeda? Fitur baru? Replikasi perbaikan itu."
-      },
-      "ds": {
-        "q3": "Perbaikan retensi antar cohort bisa signifikan secara statistik, tapi perlu sample size yang cukup untuk membuktikannya. Perlu A/B test terkontrol.",
-        "q4": "Hitung confidence interval untuk setiap cohort. Jika overlap, perbaikan belum dapat diklaim signifikan. Gunakan survival analysis untuk pemodelan churn."
-      }
+    "quickAnswer": "Penurunan paling fatal terjadi di W0 ke W1 (kehilangan 40-55% pengguna dalam 7 hari pertama). Titik penentu kesuksesan produk SaaS adalah pengalaman Onboarding di 7 hari awal.",
+    "detailedReasoning": "Semua kurva memperlihatkan bentuk L-Shape (Decay Curve). Drop-off masif terjadi di awal (W0 ke W1), kemudian kurva mulai mendatar (flattening) setelah W4. Cohort Jul menunjukkan kurva yang lebih tinggi di seluruh horizon, menandakan perbaikan fitur onboarding membawa dampak positif permanen.",
+    "dataAnalyst": {
+      "insight": "Pengguna yang tidak menemukan 'Aha! Moment' dalam 48 jam pertama hampir dipastikan akan churn dan meng-uninstall aplikasi.",
+      "recommendations": "1. Rombak alur onboarding: buat checklist interaktif 3 langkah pertama.\n2. Kirim targeted automated push notification / email drip di hari ke-1, ke-3, dan ke-7.\n3. Cari tahu tindakan apa yang membedakan pengguna aktif Cohort Jul dengan Cohort Jan.",
+      "kpiMetrics": ["Day-1 / Day-7 Retention", "Time to Value (TTV)", "Activation Rate", "Churn Rate W12"]
     },
-    "glossary": ["retensi", "cohort", "churn", "drop-off", "A/B test"]
+    "dataScience": {
+      "statisticalAnalysis": "Data ini mengikuti pemodelan Survival Analysis (Kaplan-Meier survival curves). Kurva yang mendatar di W8-W12 menandakan keberadaan 'Core Retained Users'. Perbedaan antar cohort dapat diuji signifikansinya menggunakan Log-Rank Test.",
+      "algorithms": [
+        "Kaplan-Meier Estimator (Survival Probability Curve)",
+        "Cox Proportional Hazards Model (Identifikasi Fitur yang Mempercepat Churn)",
+        "Random Forest / Gradient Boosted Churn Predictor"
+      ],
+      "pythonLibraries": ["lifelines", "scikit-learn", "statsmodels", "seaborn"],
+      "nextExperiment": "Gunakan Feature Importance dari model Churn Prediction untuk mendeteksi trigger action: misalnya 'pengguna yang mengundang 1 rekan kerja di 24 jam pertama memiliki retention 3x lipat'."
+    },
+    "dosAndDonts": {
+      "dos": [
+        "Fokuskan 80% energi tim produk pada perbaikan 7 hari pertama (W0 ke W1), bukan fitur rumit di akhir.",
+        "Cek apakah kurva retensi benar-benar 'mendatar' (flattening) sebagai tanda Product-Market Fit.",
+        "Gunakan survival analysis untuk memperhitungkan censored data (pengguna yang belum genap 12 minggu)."
+      ],
+      "donts": [
+        "JANGAN terus menambah budget akuisisi user baru jika ember retensi produk masih bocor di W1.",
+        "JANGAN mencampur pengguna gratis dan pengguna berbayar dalam satu kurva cohort yang sama.",
+        "JANGAN menghitung retensi hanya dari 'login', hitung dari 'Core Meaningful Action'."
+      ]
+    },
+    "glossary": ["retensi", "cohort", "churn", "drop-off", "a/b test"]
   },
   {
-    "id": "iklan-ctr-vs-spend",
-    "title": "CTR vs. Pengeluaran Iklan",
-    "level": "menengah",
-    "chartType": "scatter",
-    "context": "Data 30 kampanye iklan digital: sumbu X = total pengeluaran iklan (juta Rp), sumbu Y = Click-Through Rate / CTR (%). Ada berbagai jenis platform (Google, Meta, TikTok).",
-    "xLabel": "Pengeluaran Iklan (juta Rp)",
-    "yLabel": "CTR (%)",
-    "labels": [],
-    "scatterData": [
-      {"x": 0.5, "y": 3.2}, {"x": 1.0, "y": 2.8}, {"x": 1.5, "y": 3.5},
-      {"x": 2.0, "y": 2.1}, {"x": 2.5, "y": 2.5}, {"x": 3.0, "y": 1.8},
-      {"x": 3.5, "y": 2.0}, {"x": 4.0, "y": 1.5}, {"x": 5.0, "y": 1.2},
-      {"x": 5.5, "y": 1.8}, {"x": 6.0, "y": 1.1}, {"x": 7.0, "y": 0.9},
-      {"x": 8.0, "y": 1.3}, {"x": 9.0, "y": 0.8}, {"x": 10.0, "y": 0.7},
-      {"x": 1.2, "y": 4.5}, {"x": 2.2, "y": 3.9}, {"x": 0.8, "y": 5.1},
-      {"x": 4.5, "y": 3.2}, {"x": 3.2, "y": 2.8}, {"x": 6.5, "y": 2.1},
-      {"x": 0.3, "y": 2.5}, {"x": 1.8, "y": 3.0}, {"x": 7.5, "y": 1.0},
-      {"x": 9.5, "y": 0.6}, {"x": 5.2, "y": 1.4}, {"x": 2.8, "y": 2.3},
-      {"x": 4.2, "y": 1.7}, {"x": 3.8, "y": 2.2}, {"x": 8.5, "y": 0.9}
-    ],
-    "sampleAnswers": {
-      "q1": "Scatter plot yang mengukur hubungan antara pengeluaran iklan (X) dan CTR/Click-Through Rate (Y) dari 30 kampanye. Satuan X = juta Rp, Y = persen.",
-      "q2": "Terlihat kecenderungan negatif—semakin besar pengeluaran, CTR cenderung lebih rendah. Ada beberapa titik outlier dengan CTR tinggi meski pengeluaran kecil.",
-      "da": {
-        "q3": "Kampanye kecil mungkin lebih tertarget dan relevan, sehingga CTR lebih tinggi. Kampanye besar mungkin menyasar audiens lebih luas yang kurang relevan (audience fatigue).",
-        "q4": "Evaluasi ROI setiap kampanye—CTR tinggi tidak selalu berarti konversi tinggi. Cek platform mana yang memberikan CTR terbaik per rupiah yang dikeluarkan."
-      },
-      "ds": {
-        "q3": "Korelasi negatif terlihat, tapi perlu dihitung koefisien korelasi (r). Perlu diwaspadai: ini korelasi, bukan kausalitas. Ada kemungkinan confounder (misal: platform, industri).",
-        "q4": "Pisahkan data per platform sebelum menyimpulkan. Lakukan regresi dengan kontrol variabel platform. Korelasi lemah saja tidak cukup untuk keputusan budget."
-      }
-    },
-    "glossary": ["CTR", "korelasi", "kausalitas", "outlier", "regresi", "confounder"]
-  },
-  {
-    "id": "temperature-distribution",
-    "title": "Distribusi Suhu Harian Kota",
-    "level": "menengah",
+    "id": "healthcare-er-wait-time",
+    "title": "Distribusi Waktu Tunggu UGD: Deteksi Antrian Kritis",
+    "category": "Healthcare",
+    "level": "Menengah",
     "chartType": "bar",
-    "context": "Histogram distribusi suhu harian kota Jakarta selama satu bulan (30 hari). Setiap bar merepresentasikan rentang suhu 1°C.",
-    "xLabel": "Suhu (°C)",
-    "yLabel": "Frekuensi (hari)",
-    "labels": ["28","29","30","31","32","33","34","35","36","37"],
-    "values": [1, 2, 4, 7, 8, 5, 2, 1, 0, 0],
-    "sampleAnswers": {
-      "q1": "Histogram yang menunjukkan frekuensi suhu harian Jakarta dalam satu bulan. X = suhu dalam °C, Y = berapa hari suhu tersebut terjadi.",
-      "q2": "Distribusi berbentuk menyerupai kurva normal (bell-shaped), dengan puncak di 32°C (8 hari). Suhu ekstrem rendah (28°C) dan tinggi (35°C+) jarang terjadi.",
-      "da": {
-        "q3": "Suhu paling sering adalah 31-32°C, menunjukkan ini adalah suhu 'tipikal' bulan tersebut. Data ini berguna untuk planning operasional (misal: kebutuhan AC, produksi).",
-        "q4": "Gunakan suhu modus (32°C) sebagai acuan perencanaan. Tambahkan konteks bulan/musim untuk tren tahunan."
-      },
-      "ds": {
-        "q3": "Distribusi mendekati normal, memungkinkan penggunaan statistik parametrik. Hitung mean (~31.5°C) dan SD untuk mendeteksi hari-hari yang 'anomali' (>2 SD dari mean).",
-        "q4": "Uji normalitas dengan Shapiro-Wilk atau QQ-plot. Jika normal, 95% suhu seharusnya dalam range mean ± 2SD. Hari di luar range ini perlu investigasi lebih lanjut."
-      }
+    "problemStatement": "Sebuah rumah sakit menerima keluhan pasien mengenai waktu tunggu dokter di UGD. Manajemen ingin tahu apakah keterlambatan ini merata atau hanya terjadi pada segmen jam tertentu.",
+    "context": "Histogram distribusi waktu tunggu penanganan pasien di UGD (dalam interval menit, data dari 1.200 kunjungan sebulan).",
+    "xLabel": "Rentang Waktu Tunggu (Menit)",
+    "yLabel": "Jumlah Pasien (Frekuensi)",
+    "labels": ["0-15m","15-30m","30-45m","45-60m","60-75m","75-90m","90-105m",">105m"],
+    "values": [340, 420, 210, 110, 60, 35, 18, 7],
+    "quickAnswer": "Distribusi condong ke kanan (Right-Skewed). Mayoritas pasien (63%) dilayani di bawah 30 menit, namun terdapat 'Long Tail' pasien yang menunggu >60 menit yang memicu 90% komplain reputasi.",
+    "detailedReasoning": "Grafik bukan kurva lonceng simetris (normal distribution), melainkan skewed distribution (Poisson / Gamma). Nilai modus berada di 15-30 menit. Ekor panjang di sebelah kanan (>75 menit) merepresentasikan kasus bottleneck dokter jaga atau antrian lab rujukan.",
+    "dataAnalyst": {
+      "insight": "Rata-rata (mean) sekitar 32 menit terlihat baik, namun menutupi fakta bahwa ada 120 pasien yang menunggu lebih dari 1 jam. Standar akreditasi layanan rumah sakit dinilai dari batas persentil P90 dan P95.",
+      "recommendations": "1. Buat sistem triase cepat (Fast-Track Lane) khusus pasien berkondisi non-kritis.\n2. Tambahkan dokter residen jaga pada jam sibuk puncak (pukul 18.00 - 22.00).\n3. Terapkan SLA maksimal waktu tunggu lab darah maksimal 40 menit.",
+      "kpiMetrics": ["P90 & P95 Wait Time", "Door-to-Doctor Time", "Left Without Being Seen (LWBS) Rate"]
     },
-    "glossary": ["distribusi", "histogram", "mean", "median", "modus", "standar deviasi", "kurva normal"]
-  },
-  {
-    "id": "website-traffic-weekly",
-    "title": "Traffic Website Mingguan",
-    "level": "pemula",
-    "chartType": "line",
-    "context": "Jumlah pengunjung unik (unique visitors) website blog teknologi selama 16 minggu. Website baru saja meluncurkan program SEO di minggu ke-9.",
-    "xLabel": "Minggu",
-    "yLabel": "Unique Visitors",
-    "labels": ["W1","W2","W3","W4","W5","W6","W7","W8","W9","W10","W11","W12","W13","W14","W15","W16"],
-    "values": [520, 490, 510, 530, 505, 540, 515, 525, 580, 650, 720, 810, 900, 980, 1050, 1130],
-    "sampleAnswers": {
-      "q1": "Line chart yang mengukur jumlah unique visitors website per minggu selama 16 minggu. X = minggu, Y = jumlah pengunjung unik.",
-      "q2": "W1-W8 relatif datar/stabil (kisaran 490-540). Mulai W9 terjadi kenaikan konsisten dan berkelanjutan, mencapai 2x lipat di W16 dibanding W8.",
-      "da": {
-        "q3": "Program SEO yang diluncurkan di W9 tampaknya berhasil—ada efek nyata setelah implementasi. Kenaikan bersifat konsisten (bukan lonjakan sesaat), menandakan pertumbuhan organik.",
-        "q4": "Teruskan dan tingkatkan investasi SEO. Hitung ROI dari program ini. Identifikasi keyword dan konten mana yang paling berkontribusi pada kenaikan traffic."
-      },
-      "ds": {
-        "q3": "Korelasi antara launch SEO (W9) dan kenaikan traffic kuat, tapi ini masih observasional. Ada kemungkinan confounding factor (misal: konten viral, musim, backlink eksternal).",
-        "q4": "Untuk mengklaim kausalitas, perlu kontrol grup atau natural experiment. Analisis traffic per sumber (organic vs referral vs direct) untuk memastikan kenaikan memang dari SEO."
-      }
+    "dataScience": {
+      "statisticalAnalysis": "Data berdistribusi Gamma / Log-Normal. Menggunakan uji asumsi normalitas (misal Student's t-test) pada data ini tidak valid karena skewness tinggi. Metrik yang tepat adalah Median dan 95th Percentile (P95).",
+      "algorithms": [
+        "Queueing Theory Simulation (M/M/c Model)",
+        "Kernel Density Estimation (KDE) untuk fitting kurva kontinyu",
+        "Gamma Distribution Maximum Likelihood Estimation (MLE)"
+      ],
+      "pythonLibraries": ["scipy.stats", "simpy", "numpy", "seaborn"],
+      "nextExperiment": "Bangun simulasi antrian diskrit (Discrete Event Simulation dengan SimPy) untuk memodelkan dampak penambahan 1 dokter jaga terhadap P95 waktu tunggu."
     },
-    "glossary": ["unique visitors", "tren", "SEO", "kausalitas", "confounding factor"]
-  },
-  {
-    "id": "product-category-sales",
-    "title": "Penjualan per Kategori Produk",
-    "level": "pemula",
-    "chartType": "bar",
-    "context": "Perbandingan total penjualan 6 kategori produk di toko online selama Q3 (Juli-September) dalam jutaan rupiah.",
-    "xLabel": "Kategori",
-    "yLabel": "Penjualan (juta Rp)",
-    "labels": ["Elektronik","Fashion","Makanan","Olahraga","Kecantikan","Buku"],
-    "values": [280, 195, 142, 98, 175, 35],
-    "sampleAnswers": {
-      "q1": "Bar chart yang membandingkan total penjualan 6 kategori produk selama Q3. X = nama kategori, Y = total penjualan dalam juta rupiah.",
-      "q2": "Elektronik mendominasi dengan jauh (280 juta), diikuti Fashion (195) dan Kecantikan (175). Buku paling rendah (35 juta). Ada gap besar antara Elektronik dan kategori lainnya.",
-      "da": {
-        "q3": "Elektronik mendominasi karena nilai transaksi per unit jauh lebih tinggi. Fashion dan Kecantikan mungkin memiliki volume transaksi lebih tinggi tapi nilai per item lebih kecil.",
-        "q4": "Jangan hanya lihat total penjualan—analisis juga margin profit per kategori, jumlah transaksi, dan average order value. Buku rendah nilai tapi mungkin punya margin tinggi."
-      },
-      "ds": {
-        "q3": "Perlu membandingkan apakah distribusi ini konsisten dengan Q1 dan Q2. Ada kemungkinan bias sampling jika data hanya dari satu platform atau segmen pelanggan.",
-        "q4": "Normalisasi data dengan jumlah SKU per kategori untuk perbandingan yang adil. Analisis apakah perbedaan antar kategori signifikan secara statistik."
-      }
+    "dosAndDonts": {
+      "dos": [
+        "Gunakan persentil ke-90 (P90) dan ke-95 (P95) alih-alih nilai rata-rata biasa.",
+        "Kelompokkan waktu tunggu berdasarkan tingkat keparahan triase (Emergency vs Non-Urgent).",
+        "Gunakan teori antrian (Queueing Theory) untuk menghitung kapasitas optimal staf medis."
+      ],
+      "donts": [
+        "JANGAN membanggakan nilai 'rata-rata 25 menit' jika pasien di ekor kanan (>90 menit) mengalami risiko fatalitas.",
+        "JANGAN berasumsi data antrian berdistribusi normal (bell curve).",
+        "JANGAN memangkas waktu konsultasi demi mempercepat antrian tanpa menjaga kualitas diagnosa."
+      ]
     },
-    "glossary": ["kategorisasi", "perbandingan", "margin", "average order value", "normalisasi"]
-  },
-  {
-    "id": "app-session-duration",
-    "title": "Durasi Sesi Aplikasi vs Rating",
-    "level": "menengah",
-    "chartType": "scatter",
-    "context": "Data 25 pengguna aplikasi: sumbu X = rata-rata durasi sesi harian (menit), sumbu Y = rating yang mereka berikan (1-5 bintang). Data diambil setelah 30 hari penggunaan.",
-    "xLabel": "Durasi Sesi (menit/hari)",
-    "yLabel": "Rating (bintang)",
-    "labels": [],
-    "scatterData": [
-      {"x": 5, "y": 2}, {"x": 8, "y": 3}, {"x": 10, "y": 3}, {"x": 12, "y": 4},
-      {"x": 15, "y": 4}, {"x": 18, "y": 5}, {"x": 20, "y": 4}, {"x": 22, "y": 5},
-      {"x": 25, "y": 5}, {"x": 7, "y": 2}, {"x": 6, "y": 1}, {"x": 30, "y": 5},
-      {"x": 3, "y": 1}, {"x": 4, "y": 2}, {"x": 28, "y": 4}, {"x": 35, "y": 5},
-      {"x": 11, "y": 3}, {"x": 14, "y": 4}, {"x": 16, "y": 3}, {"x": 9, "y": 2},
-      {"x": 40, "y": 4}, {"x": 50, "y": 3}, {"x": 45, "y": 5}, {"x": 2, "y": 1},
-      {"x": 32, "y": 5}
-    ],
-    "sampleAnswers": {
-      "q1": "Scatter plot yang mengukur hubungan durasi sesi aplikasi harian (X) dengan rating yang diberikan pengguna (Y), dari 25 responden setelah 30 hari penggunaan.",
-      "q2": "Terdapat kecenderungan positif—pengguna dengan sesi lebih lama cenderung memberikan rating lebih tinggi. Namun ada variabilitas, terutama di sesi >30 menit.",
-      "da": {
-        "q3": "Pengguna yang puas menghabiskan lebih banyak waktu di aplikasi. Atau, pengguna yang sudah terlibat (engaged) lebih mungkin memberi rating bagus karena merasa investasi waktu mereka terbayar.",
-        "q4": "Target meningkatkan durasi sesi pengguna baru sebagai proxy kepuasan. Identifikasi fitur apa yang membuat pengguna berlama-lama. Buat onboarding yang mendorong eksplorasi fitur."
-      },
-      "ds": {
-        "q3": "Korelasi positif terlihat tapi ada reverse causality risk: apakah pengguna puas karena lama pakai, atau mereka lama pakai karena puas? Perlu eksperimen longitudinal.",
-        "q4": "Hitung Pearson/Spearman correlation coefficient. Dengan n=25, perlu r>0.40 untuk p<0.05. Perhatikan beberapa outlier (durasi >40 menit dengan rating bervariasi) yang perlu dieksplorasi."
-      }
-    },
-    "glossary": ["korelasi", "scatter plot", "reverse causality", "Pearson", "Spearman", "engagement"]
+    "glossary": ["distribusi", "histogram", "mean", "median", "standar deviasi"]
   }
 ]
