@@ -1,0 +1,217 @@
+[
+  {
+    "id": "reels-views-spike",
+    "title": "Lonjakan Views Reels",
+    "level": "pemula",
+    "chartType": "line",
+    "context": "Views Reels sebuah akun konten selama 8 minggu. Akun ini biasanya posting 2-3 konten per minggu.",
+    "xLabel": "Minggu",
+    "yLabel": "Views",
+    "labels": ["M1","M2","M3","M4","M5","M6","M7","M8"],
+    "values": [1200,1350,1300,1500,4800,2100,1700,1650],
+    "sampleAnswers": {
+      "q1": "Line chart yang mengukur jumlah views Reels per minggu selama 8 minggu. Sumbu X = minggu (M1-M8), sumbu Y = jumlah views, tidak ada satuan khusus (views = unit sendiri).",
+      "q2": "Data relatif stabil di M1-M4 (kisaran 1200-1500), lalu melonjak tajam di M5 (4800 = +220% dari M4), kemudian turun kembali ke kisaran normal di M6-M8.",
+      "da": {
+        "q3": "Kemungkinan besar ada satu konten viral di M5, mungkin ikut tren atau di-share oleh akun besar. Lonjakan ini tidak berkelanjutan.",
+        "q4": "Analisis konten apa yang diposting di M5 (topik, format, waktu posting). Coba reproduksi formula konten tersebut. Jangan jadikan M5 sebagai baseline target views."
+      },
+      "ds": {
+        "q3": "M5 adalah outlier signifikan. Perlu dihitung apakah 4800 benar-benar di luar batas fluktuasi normal (mean ± 2-3 SD dari M1-M4, M6-M8).",
+        "q4": "Gunakan median sebagai ukuran sentral, bukan mean (karena mean terdistorsi oleh outlier M5). Kumpulkan lebih banyak data sebelum membuat keputusan berbasis M5 saja."
+      }
+    },
+    "glossary": ["outlier", "tren", "median", "mean", "lonjakan"]
+  },
+  {
+    "id": "ecom-monthly-sales",
+    "title": "Penjualan Toko Online 12 Bulan",
+    "level": "pemula",
+    "chartType": "bar",
+    "context": "Penjualan bulanan sebuah toko online fashion selama 1 tahun (dalam juta rupiah). Toko ini sering membuat promo musiman.",
+    "xLabel": "Bulan",
+    "yLabel": "Penjualan (juta Rp)",
+    "labels": ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"],
+    "values": [45, 42, 48, 51, 53, 60, 55, 58, 62, 65, 95, 120],
+    "sampleAnswers": {
+      "q1": "Bar chart yang mengukur total penjualan bulanan toko online fashion selama 12 bulan dalam satuan juta rupiah.",
+      "q2": "Penjualan cenderung naik perlahan dari Jan-Okt, kemudian melonjak drastis di Nov (+46%) dan Des (+81% dibanding Jan). Tren keseluruhan adalah naik.",
+      "da": {
+        "q3": "Lonjakan Nov-Des sangat jelas terkait musim belanja: Harbolnas 11.11 di November dan belanja akhir tahun/Natal di Desember. Ini pola musiman yang normal untuk e-commerce.",
+        "q4": "Rencanakan stok dan promosi lebih awal untuk kuartal 4. Pelajari apa yang membuat Des jauh lebih tinggi dari Nov—apakah ada kampanye spesial?"
+      },
+      "ds": {
+        "q3": "Ada dua pola: (1) tren naik jangka panjang (growth organik), dan (2) musiman akhir tahun. Keduanya perlu dipisahkan untuk analisis yang akurat.",
+        "q4": "Lakukan dekomposisi time series: pisahkan komponen tren, musiman, dan residual. Forecast tahun berikutnya dengan memperhitungkan keduanya."
+      }
+    },
+    "glossary": ["tren", "musiman", "dekomposisi", "forecast"]
+  },
+  {
+    "id": "user-retention-cohort",
+    "title": "Retensi Pengguna Aplikasi",
+    "level": "menengah",
+    "chartType": "line",
+    "context": "Persentase pengguna yang masih aktif setelah mendaftar di aplikasi mobile. Data diambil dari 3 cohort bulan berbeda (Jan, Apr, Jul).",
+    "xLabel": "Minggu setelah daftar",
+    "yLabel": "Retensi (%)",
+    "labels": ["W0","W1","W2","W3","W4","W8","W12"],
+    "datasets": [
+      {"label": "Cohort Jan", "values": [100, 45, 32, 28, 25, 18, 15]},
+      {"label": "Cohort Apr", "values": [100, 52, 40, 35, 30, 22, 19]},
+      {"label": "Cohort Jul", "values": [100, 60, 48, 42, 38, 28, 24]}
+    ],
+    "sampleAnswers": {
+      "q1": "Line chart multi-series yang mengukur persentase retensi pengguna dari titik mendaftar (W0=100%) hingga W12, dibandingkan antar 3 cohort.",
+      "q2": "Semua cohort menunjukkan penurunan tajam di W0→W1, lalu melandai. Cohort Jul memiliki retensi tertinggi di semua titik. Ada tren perbaikan dari waktu ke waktu.",
+      "da": {
+        "q3": "Produk semakin membaik—fitur onboarding atau UX yang diupdate kemungkinan membuat pengguna baru lebih betah. W1 adalah titik kritis drop-off.",
+        "q4": "Fokus pada pengalaman 7 hari pertama (W0→W1). Cari tahu apa yang berbeda di Cohort Jul—kampanye akuisisi berbeda? Fitur baru? Replikasi perbaikan itu."
+      },
+      "ds": {
+        "q3": "Perbaikan retensi antar cohort bisa signifikan secara statistik, tapi perlu sample size yang cukup untuk membuktikannya. Perlu A/B test terkontrol.",
+        "q4": "Hitung confidence interval untuk setiap cohort. Jika overlap, perbaikan belum dapat diklaim signifikan. Gunakan survival analysis untuk pemodelan churn."
+      }
+    },
+    "glossary": ["retensi", "cohort", "churn", "drop-off", "A/B test"]
+  },
+  {
+    "id": "iklan-ctr-vs-spend",
+    "title": "CTR vs. Pengeluaran Iklan",
+    "level": "menengah",
+    "chartType": "scatter",
+    "context": "Data 30 kampanye iklan digital: sumbu X = total pengeluaran iklan (juta Rp), sumbu Y = Click-Through Rate / CTR (%). Ada berbagai jenis platform (Google, Meta, TikTok).",
+    "xLabel": "Pengeluaran Iklan (juta Rp)",
+    "yLabel": "CTR (%)",
+    "labels": [],
+    "scatterData": [
+      {"x": 0.5, "y": 3.2}, {"x": 1.0, "y": 2.8}, {"x": 1.5, "y": 3.5},
+      {"x": 2.0, "y": 2.1}, {"x": 2.5, "y": 2.5}, {"x": 3.0, "y": 1.8},
+      {"x": 3.5, "y": 2.0}, {"x": 4.0, "y": 1.5}, {"x": 5.0, "y": 1.2},
+      {"x": 5.5, "y": 1.8}, {"x": 6.0, "y": 1.1}, {"x": 7.0, "y": 0.9},
+      {"x": 8.0, "y": 1.3}, {"x": 9.0, "y": 0.8}, {"x": 10.0, "y": 0.7},
+      {"x": 1.2, "y": 4.5}, {"x": 2.2, "y": 3.9}, {"x": 0.8, "y": 5.1},
+      {"x": 4.5, "y": 3.2}, {"x": 3.2, "y": 2.8}, {"x": 6.5, "y": 2.1},
+      {"x": 0.3, "y": 2.5}, {"x": 1.8, "y": 3.0}, {"x": 7.5, "y": 1.0},
+      {"x": 9.5, "y": 0.6}, {"x": 5.2, "y": 1.4}, {"x": 2.8, "y": 2.3},
+      {"x": 4.2, "y": 1.7}, {"x": 3.8, "y": 2.2}, {"x": 8.5, "y": 0.9}
+    ],
+    "sampleAnswers": {
+      "q1": "Scatter plot yang mengukur hubungan antara pengeluaran iklan (X) dan CTR/Click-Through Rate (Y) dari 30 kampanye. Satuan X = juta Rp, Y = persen.",
+      "q2": "Terlihat kecenderungan negatif—semakin besar pengeluaran, CTR cenderung lebih rendah. Ada beberapa titik outlier dengan CTR tinggi meski pengeluaran kecil.",
+      "da": {
+        "q3": "Kampanye kecil mungkin lebih tertarget dan relevan, sehingga CTR lebih tinggi. Kampanye besar mungkin menyasar audiens lebih luas yang kurang relevan (audience fatigue).",
+        "q4": "Evaluasi ROI setiap kampanye—CTR tinggi tidak selalu berarti konversi tinggi. Cek platform mana yang memberikan CTR terbaik per rupiah yang dikeluarkan."
+      },
+      "ds": {
+        "q3": "Korelasi negatif terlihat, tapi perlu dihitung koefisien korelasi (r). Perlu diwaspadai: ini korelasi, bukan kausalitas. Ada kemungkinan confounder (misal: platform, industri).",
+        "q4": "Pisahkan data per platform sebelum menyimpulkan. Lakukan regresi dengan kontrol variabel platform. Korelasi lemah saja tidak cukup untuk keputusan budget."
+      }
+    },
+    "glossary": ["CTR", "korelasi", "kausalitas", "outlier", "regresi", "confounder"]
+  },
+  {
+    "id": "temperature-distribution",
+    "title": "Distribusi Suhu Harian Kota",
+    "level": "menengah",
+    "chartType": "bar",
+    "context": "Histogram distribusi suhu harian kota Jakarta selama satu bulan (30 hari). Setiap bar merepresentasikan rentang suhu 1°C.",
+    "xLabel": "Suhu (°C)",
+    "yLabel": "Frekuensi (hari)",
+    "labels": ["28","29","30","31","32","33","34","35","36","37"],
+    "values": [1, 2, 4, 7, 8, 5, 2, 1, 0, 0],
+    "sampleAnswers": {
+      "q1": "Histogram yang menunjukkan frekuensi suhu harian Jakarta dalam satu bulan. X = suhu dalam °C, Y = berapa hari suhu tersebut terjadi.",
+      "q2": "Distribusi berbentuk menyerupai kurva normal (bell-shaped), dengan puncak di 32°C (8 hari). Suhu ekstrem rendah (28°C) dan tinggi (35°C+) jarang terjadi.",
+      "da": {
+        "q3": "Suhu paling sering adalah 31-32°C, menunjukkan ini adalah suhu 'tipikal' bulan tersebut. Data ini berguna untuk planning operasional (misal: kebutuhan AC, produksi).",
+        "q4": "Gunakan suhu modus (32°C) sebagai acuan perencanaan. Tambahkan konteks bulan/musim untuk tren tahunan."
+      },
+      "ds": {
+        "q3": "Distribusi mendekati normal, memungkinkan penggunaan statistik parametrik. Hitung mean (~31.5°C) dan SD untuk mendeteksi hari-hari yang 'anomali' (>2 SD dari mean).",
+        "q4": "Uji normalitas dengan Shapiro-Wilk atau QQ-plot. Jika normal, 95% suhu seharusnya dalam range mean ± 2SD. Hari di luar range ini perlu investigasi lebih lanjut."
+      }
+    },
+    "glossary": ["distribusi", "histogram", "mean", "median", "modus", "standar deviasi", "kurva normal"]
+  },
+  {
+    "id": "website-traffic-weekly",
+    "title": "Traffic Website Mingguan",
+    "level": "pemula",
+    "chartType": "line",
+    "context": "Jumlah pengunjung unik (unique visitors) website blog teknologi selama 16 minggu. Website baru saja meluncurkan program SEO di minggu ke-9.",
+    "xLabel": "Minggu",
+    "yLabel": "Unique Visitors",
+    "labels": ["W1","W2","W3","W4","W5","W6","W7","W8","W9","W10","W11","W12","W13","W14","W15","W16"],
+    "values": [520, 490, 510, 530, 505, 540, 515, 525, 580, 650, 720, 810, 900, 980, 1050, 1130],
+    "sampleAnswers": {
+      "q1": "Line chart yang mengukur jumlah unique visitors website per minggu selama 16 minggu. X = minggu, Y = jumlah pengunjung unik.",
+      "q2": "W1-W8 relatif datar/stabil (kisaran 490-540). Mulai W9 terjadi kenaikan konsisten dan berkelanjutan, mencapai 2x lipat di W16 dibanding W8.",
+      "da": {
+        "q3": "Program SEO yang diluncurkan di W9 tampaknya berhasil—ada efek nyata setelah implementasi. Kenaikan bersifat konsisten (bukan lonjakan sesaat), menandakan pertumbuhan organik.",
+        "q4": "Teruskan dan tingkatkan investasi SEO. Hitung ROI dari program ini. Identifikasi keyword dan konten mana yang paling berkontribusi pada kenaikan traffic."
+      },
+      "ds": {
+        "q3": "Korelasi antara launch SEO (W9) dan kenaikan traffic kuat, tapi ini masih observasional. Ada kemungkinan confounding factor (misal: konten viral, musim, backlink eksternal).",
+        "q4": "Untuk mengklaim kausalitas, perlu kontrol grup atau natural experiment. Analisis traffic per sumber (organic vs referral vs direct) untuk memastikan kenaikan memang dari SEO."
+      }
+    },
+    "glossary": ["unique visitors", "tren", "SEO", "kausalitas", "confounding factor"]
+  },
+  {
+    "id": "product-category-sales",
+    "title": "Penjualan per Kategori Produk",
+    "level": "pemula",
+    "chartType": "bar",
+    "context": "Perbandingan total penjualan 6 kategori produk di toko online selama Q3 (Juli-September) dalam jutaan rupiah.",
+    "xLabel": "Kategori",
+    "yLabel": "Penjualan (juta Rp)",
+    "labels": ["Elektronik","Fashion","Makanan","Olahraga","Kecantikan","Buku"],
+    "values": [280, 195, 142, 98, 175, 35],
+    "sampleAnswers": {
+      "q1": "Bar chart yang membandingkan total penjualan 6 kategori produk selama Q3. X = nama kategori, Y = total penjualan dalam juta rupiah.",
+      "q2": "Elektronik mendominasi dengan jauh (280 juta), diikuti Fashion (195) dan Kecantikan (175). Buku paling rendah (35 juta). Ada gap besar antara Elektronik dan kategori lainnya.",
+      "da": {
+        "q3": "Elektronik mendominasi karena nilai transaksi per unit jauh lebih tinggi. Fashion dan Kecantikan mungkin memiliki volume transaksi lebih tinggi tapi nilai per item lebih kecil.",
+        "q4": "Jangan hanya lihat total penjualan—analisis juga margin profit per kategori, jumlah transaksi, dan average order value. Buku rendah nilai tapi mungkin punya margin tinggi."
+      },
+      "ds": {
+        "q3": "Perlu membandingkan apakah distribusi ini konsisten dengan Q1 dan Q2. Ada kemungkinan bias sampling jika data hanya dari satu platform atau segmen pelanggan.",
+        "q4": "Normalisasi data dengan jumlah SKU per kategori untuk perbandingan yang adil. Analisis apakah perbedaan antar kategori signifikan secara statistik."
+      }
+    },
+    "glossary": ["kategorisasi", "perbandingan", "margin", "average order value", "normalisasi"]
+  },
+  {
+    "id": "app-session-duration",
+    "title": "Durasi Sesi Aplikasi vs Rating",
+    "level": "menengah",
+    "chartType": "scatter",
+    "context": "Data 25 pengguna aplikasi: sumbu X = rata-rata durasi sesi harian (menit), sumbu Y = rating yang mereka berikan (1-5 bintang). Data diambil setelah 30 hari penggunaan.",
+    "xLabel": "Durasi Sesi (menit/hari)",
+    "yLabel": "Rating (bintang)",
+    "labels": [],
+    "scatterData": [
+      {"x": 5, "y": 2}, {"x": 8, "y": 3}, {"x": 10, "y": 3}, {"x": 12, "y": 4},
+      {"x": 15, "y": 4}, {"x": 18, "y": 5}, {"x": 20, "y": 4}, {"x": 22, "y": 5},
+      {"x": 25, "y": 5}, {"x": 7, "y": 2}, {"x": 6, "y": 1}, {"x": 30, "y": 5},
+      {"x": 3, "y": 1}, {"x": 4, "y": 2}, {"x": 28, "y": 4}, {"x": 35, "y": 5},
+      {"x": 11, "y": 3}, {"x": 14, "y": 4}, {"x": 16, "y": 3}, {"x": 9, "y": 2},
+      {"x": 40, "y": 4}, {"x": 50, "y": 3}, {"x": 45, "y": 5}, {"x": 2, "y": 1},
+      {"x": 32, "y": 5}
+    ],
+    "sampleAnswers": {
+      "q1": "Scatter plot yang mengukur hubungan durasi sesi aplikasi harian (X) dengan rating yang diberikan pengguna (Y), dari 25 responden setelah 30 hari penggunaan.",
+      "q2": "Terdapat kecenderungan positif—pengguna dengan sesi lebih lama cenderung memberikan rating lebih tinggi. Namun ada variabilitas, terutama di sesi >30 menit.",
+      "da": {
+        "q3": "Pengguna yang puas menghabiskan lebih banyak waktu di aplikasi. Atau, pengguna yang sudah terlibat (engaged) lebih mungkin memberi rating bagus karena merasa investasi waktu mereka terbayar.",
+        "q4": "Target meningkatkan durasi sesi pengguna baru sebagai proxy kepuasan. Identifikasi fitur apa yang membuat pengguna berlama-lama. Buat onboarding yang mendorong eksplorasi fitur."
+      },
+      "ds": {
+        "q3": "Korelasi positif terlihat tapi ada reverse causality risk: apakah pengguna puas karena lama pakai, atau mereka lama pakai karena puas? Perlu eksperimen longitudinal.",
+        "q4": "Hitung Pearson/Spearman correlation coefficient. Dengan n=25, perlu r>0.40 untuk p<0.05. Perhatikan beberapa outlier (durasi >40 menit dengan rating bervariasi) yang perlu dieksplorasi."
+      }
+    },
+    "glossary": ["korelasi", "scatter plot", "reverse causality", "Pearson", "Spearman", "engagement"]
+  }
+]
