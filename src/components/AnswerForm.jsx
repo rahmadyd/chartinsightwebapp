@@ -1,68 +1,85 @@
 import React from 'react';
+import { useApp } from '../context/AppContext';
 import GlossaryTooltip from './GlossaryTooltip';
 
 const QUESTIONS = [
-  {
-    key: 'q1',
-    label: 'Q1: Ini grafik apa, mengukur apa?',
-    hint: 'Sebutkan jenis grafik, sumbu X, sumbu Y, satuan, dan periode waktu.',
-    emoji: '📌',
-  },
-  {
-    key: 'q2',
-    label: 'Q2: Bentuknya bagaimana?',
-    hint: 'Deskripsikan pola: naik, turun, datar, ada lonjakan? Ada outlier? Pola berulang?',
-    emoji: '📈',
-  },
-  {
-    key: 'q3',
-    label: 'Q3: Kenapa mungkin begitu?',
-    hint: 'Hipotesiskan penyebab pola yang kamu lihat. Boleh lebih dari satu kemungkinan.',
-    emoji: '🤔',
-  },
-  {
-    key: 'q4',
-    label: 'Q4: Lalu harus ngapain?',
-    hint: 'Apa rekomendasi atau tindakan selanjutnya berdasarkan data ini?',
-    emoji: '🎯',
-  },
+  { key: 'q1', n: 'Q1', emoji: '📌', label: 'Ini grafik apa, mengukur apa?', hint: 'Jenis grafik · sumbu X · sumbu Y · satuan · periode' },
+  { key: 'q2', n: 'Q2', emoji: '📈', label: 'Bentuknya bagaimana?', hint: 'Naik · turun · datar · lonjakan · outlier · pola berulang' },
+  { key: 'q3', n: 'Q3', emoji: '🤔', label: 'Kenapa mungkin begitu?', hint: 'Hipotesis penyebab — boleh lebih dari satu kemungkinan' },
+  { key: 'q4', n: 'Q4', emoji: '🎯', label: 'Lalu harus ngapain?', hint: 'Rekomendasi atau tindakan selanjutnya berdasarkan data ini' },
 ];
 
 export default function AnswerForm({ answers, onChange, caseData }) {
+  const { isDA, modeColor, modePillClass } = useApp();
+  const focusClass = isDA ? '' : 'ds-focus';
   const glossaryTerms = caseData?.glossary || [];
 
   return (
-    <div className="space-y-4">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      {/* Glossary chips */}
       {glossaryTerms.length > 0 && (
-        <div className="flex flex-wrap gap-2 items-center mb-2">
-          <span className="text-xs text-text-muted">Glosarium kasus ini:</span>
-          {glossaryTerms.map((term) => (
-            <GlossaryTooltip key={term} term={term} />
-          ))}
+        <div style={{
+          background: 'var(--color-bg-card)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 12, padding: '0.625rem 0.875rem',
+          display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center',
+        }}>
+          <span style={{ fontSize: '0.7rem', color: 'var(--color-text-3)', fontWeight: 600 }}>🔤 Istilah kunci:</span>
+          {glossaryTerms.map(t => <GlossaryTooltip key={t} term={t} />)}
         </div>
       )}
-      {QUESTIONS.map(({ key, label, hint, emoji }) => (
-        <div key={key} className="bg-surface-2 rounded-xl p-4 border border-border">
-          <label className="block mb-1">
-            <span className="text-text-primary font-semibold text-sm">
-              {emoji} {label}
-            </span>
-            <span className="block text-xs text-text-muted mt-0.5">{hint}</span>
-          </label>
-          <textarea
-            className="w-full mt-2 bg-surface-1 border border-border rounded-lg px-3 py-2 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-da focus:ring-1 focus:ring-accent-da resize-none transition-colors"
-            rows={3}
-            placeholder="Tulis jawabanmu di sini..."
-            value={answers[key] || ''}
-            onChange={(e) => onChange(key, e.target.value)}
-          />
-          {answers[key] && (
-            <div className="flex justify-end mt-1">
-              <span className="text-xs text-green-400">✓ Tersimpan otomatis</span>
+
+      {/* Questions */}
+      {QUESTIONS.map(({ key, n, emoji, label, hint }) => {
+        const filled = answers[key]?.trim().length > 0;
+        return (
+          <div key={key} style={{
+            background: 'var(--color-bg-card)',
+            border: filled
+              ? `1.5px solid ${modeColor}`
+              : '1.5px solid var(--color-border)',
+            borderRadius: 14,
+            padding: '0.875rem',
+            transition: 'border-color 0.2s',
+          }}>
+            {/* Q header */}
+            <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 8 }}>
+              <div style={{
+                minWidth: 30, height: 30,
+                borderRadius: 8,
+                background: filled ? modeColor : 'var(--color-bg-raised)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '0.72rem', fontWeight: 800,
+                color: filled ? '#fff' : 'var(--color-text-3)',
+                transition: 'all 0.2s',
+              }}>
+                {filled ? '✓' : n}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 700, fontSize: '0.85rem', lineHeight: 1.3 }}>
+                  {emoji} {label}
+                </div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--color-text-3)', marginTop: 2 }}>{hint}</div>
+              </div>
             </div>
-          )}
-        </div>
-      ))}
+
+            <textarea
+              className={`input-field ${focusClass}`}
+              rows={3}
+              placeholder="Tulis jawabanmu di sini..."
+              value={answers[key] || ''}
+              onChange={e => onChange(key, e.target.value)}
+              style={{ resize: 'none', marginTop: 2 }}
+            />
+
+            {filled && (
+              <div style={{ textAlign: 'right', marginTop: 4, fontSize: '0.7rem', color: 'var(--color-success)' }}>
+                ✓ Tersimpan otomatis
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

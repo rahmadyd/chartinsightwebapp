@@ -1,213 +1,158 @@
 import React from 'react';
+import { useApp } from '../context/AppContext';
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
+  CategoryScale, LinearScale, PointElement, LineElement,
+  BarElement, Title, Tooltip, Legend, Filler,
 } from 'chart.js';
 import { Line, Bar, Scatter } from 'react-chartjs-2';
 
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
+  CategoryScale, LinearScale, PointElement, LineElement,
+  BarElement, Title, Tooltip, Legend, Filler,
 );
 
-const CHART_COLORS = [
-  'rgba(59, 130, 246, 1)',
-  'rgba(168, 85, 247, 1)',
-  'rgba(34, 197, 94, 1)',
-  'rgba(251, 146, 60, 1)',
-];
+// DA colors = blue family, DS colors = purple family
+const PALETTE = {
+  da: {
+    line: ['rgba(79,158,255,1)', 'rgba(34,211,238,1)', 'rgba(52,211,153,1)'],
+    lineFill: ['rgba(79,158,255,0.12)', 'rgba(34,211,238,0.10)', 'rgba(52,211,153,0.10)'],
+    bar: 'rgba(79,158,255,0.75)',
+    barBorder: 'rgba(79,158,255,1)',
+    scatter: 'rgba(79,158,255,0.7)',
+    scatterBorder: 'rgba(79,158,255,1)',
+  },
+  ds: {
+    line: ['rgba(191,127,255,1)', 'rgba(251,146,60,1)', 'rgba(52,211,153,1)'],
+    lineFill: ['rgba(191,127,255,0.12)', 'rgba(251,146,60,0.10)', 'rgba(52,211,153,0.10)'],
+    bar: 'rgba(191,127,255,0.75)',
+    barBorder: 'rgba(191,127,255,1)',
+    scatter: 'rgba(191,127,255,0.7)',
+    scatterBorder: 'rgba(191,127,255,1)',
+  },
+};
 
-const CHART_BG_COLORS = [
-  'rgba(59, 130, 246, 0.15)',
-  'rgba(168, 85, 247, 0.15)',
-  'rgba(34, 197, 94, 0.15)',
-  'rgba(251, 146, 60, 0.15)',
-];
-
-const baseOptions = {
+const baseOptions = (title, xLabel, yLabel, mode) => ({
   responsive: true,
   maintainAspectRatio: false,
+  animation: { duration: 600, easing: 'easeInOutQuart' },
   plugins: {
     legend: {
       labels: {
         color: '#94a3b8',
-        font: { size: 12, family: 'Inter, system-ui, sans-serif' },
-        padding: 16,
+        font: { size: 11, family: 'Inter, system-ui' },
+        padding: 14,
+        boxWidth: 12,
+        boxHeight: 12,
       },
     },
+    title: {
+      display: !!title,
+      text: title,
+      color: '#f0f4ff',
+      font: { size: 13, weight: '700', family: 'Inter, system-ui' },
+      padding: { bottom: 14 },
+    },
     tooltip: {
-      backgroundColor: '#1e293b',
-      borderColor: '#334155',
+      backgroundColor: '#0f1422',
+      borderColor: mode === 'da' ? 'rgba(79,158,255,0.4)' : 'rgba(191,127,255,0.4)',
       borderWidth: 1,
-      titleColor: '#f1f5f9',
-      bodyColor: '#94a3b8',
+      titleColor: '#f0f4ff',
+      bodyColor: '#b8c4e0',
       padding: 10,
-      cornerRadius: 8,
+      cornerRadius: 10,
+      boxPadding: 4,
     },
   },
   scales: {
     x: {
-      grid: { color: 'rgba(51, 65, 85, 0.5)' },
-      ticks: { color: '#64748b', font: { size: 11, family: 'Inter, system-ui, sans-serif' } },
+      grid: { color: 'rgba(42,53,80,0.6)', drawBorder: false },
+      ticks: { color: '#6b7fa3', font: { size: 10, family: 'Inter, system-ui' } },
+      title: { display: !!xLabel, text: xLabel, color: '#6b7fa3', font: { size: 10 } },
     },
     y: {
-      grid: { color: 'rgba(51, 65, 85, 0.5)' },
-      ticks: { color: '#64748b', font: { size: 11, family: 'Inter, system-ui, sans-serif' } },
+      grid: { color: 'rgba(42,53,80,0.6)', drawBorder: false },
+      ticks: { color: '#6b7fa3', font: { size: 10, family: 'Inter, system-ui' } },
+      title: { display: !!yLabel, text: yLabel, color: '#6b7fa3', font: { size: 10 } },
     },
   },
-};
+});
 
-function buildLineData(caseData) {
+function buildLine(caseData, p) {
   if (caseData.datasets) {
     return {
       labels: caseData.labels,
       datasets: caseData.datasets.map((ds, i) => ({
         label: ds.label,
         data: ds.values,
-        borderColor: CHART_COLORS[i % CHART_COLORS.length],
-        backgroundColor: CHART_BG_COLORS[i % CHART_BG_COLORS.length],
-        tension: 0.4,
-        fill: false,
-        pointRadius: 5,
-        pointHoverRadius: 8,
-        borderWidth: 2.5,
+        borderColor: p.line[i % p.line.length],
+        backgroundColor: p.lineFill[i % p.lineFill.length],
+        tension: 0.4, fill: false, pointRadius: 5, pointHoverRadius: 8, borderWidth: 2.5,
       })),
     };
   }
   return {
     labels: caseData.labels,
-    datasets: [
-      {
-        label: caseData.yLabel,
-        data: caseData.values,
-        borderColor: CHART_COLORS[0],
-        backgroundColor: CHART_BG_COLORS[0],
-        tension: 0.4,
-        fill: true,
-        pointRadius: 5,
-        pointHoverRadius: 8,
-        borderWidth: 2.5,
-      },
-    ],
+    datasets: [{
+      label: caseData.yLabel,
+      data: caseData.values,
+      borderColor: p.line[0],
+      backgroundColor: p.lineFill[0],
+      tension: 0.4, fill: true, pointRadius: 5, pointHoverRadius: 8, borderWidth: 2.5,
+      pointBackgroundColor: p.line[0],
+    }],
   };
 }
 
-function buildBarData(caseData) {
+function buildBar(caseData, p) {
   return {
     labels: caseData.labels,
-    datasets: [
-      {
-        label: caseData.yLabel,
-        data: caseData.values,
-        backgroundColor: caseData.labels.map((_, i) =>
-          CHART_BG_COLORS[0].replace('0.15', '0.7')
-        ),
-        borderColor: CHART_COLORS[0],
-        borderWidth: 1.5,
-        borderRadius: 6,
-        borderSkipped: false,
-      },
-    ],
+    datasets: [{
+      label: caseData.yLabel,
+      data: caseData.values,
+      backgroundColor: p.bar,
+      borderColor: p.barBorder,
+      borderWidth: 1.5,
+      borderRadius: 8,
+      borderSkipped: false,
+      hoverBackgroundColor: p.barBorder,
+    }],
   };
 }
 
-function buildScatterData(caseData) {
+function buildScatter(caseData, p) {
   return {
-    datasets: [
-      {
-        label: 'Data Points',
-        data: caseData.scatterData,
-        backgroundColor: CHART_BG_COLORS[1].replace('0.15', '0.6'),
-        borderColor: CHART_COLORS[1],
-        borderWidth: 1.5,
-        pointRadius: 7,
-        pointHoverRadius: 10,
-      },
-    ],
+    datasets: [{
+      label: 'Data Points',
+      data: caseData.scatterData,
+      backgroundColor: p.scatter,
+      borderColor: p.scatterBorder,
+      borderWidth: 1.5,
+      pointRadius: 7,
+      pointHoverRadius: 10,
+    }],
   };
 }
 
-export default function ChartView({ caseData }) {
-  const { chartType, xLabel, yLabel, title } = caseData;
+export default function ChartView({ caseData, mode: modeProp }) {
+  const ctx = useApp();
+  const mode = modeProp || ctx?.perspectiveMode || 'da';
+  const p = PALETTE[mode];
+  const opts = baseOptions(caseData.title, caseData.xLabel, caseData.yLabel, mode);
 
-  const options = {
-    ...baseOptions,
-    plugins: {
-      ...baseOptions.plugins,
-      title: {
-        display: true,
-        text: title,
-        color: '#e2e8f0',
-        font: { size: 15, weight: '600', family: 'Inter, system-ui, sans-serif' },
-        padding: { bottom: 16 },
-      },
-    },
-    scales: {
-      ...baseOptions.scales,
-      x: {
-        ...baseOptions.scales.x,
-        title: {
-          display: true,
-          text: xLabel,
-          color: '#64748b',
-          font: { size: 11, family: 'Inter, system-ui, sans-serif' },
+  if (caseData.chartType === 'line') return <Line data={buildLine(caseData, p)} options={opts} />;
+  if (caseData.chartType === 'bar')  return <Bar  data={buildBar(caseData, p)}  options={opts} />;
+  if (caseData.chartType === 'scatter') return (
+    <Scatter
+      data={buildScatter(caseData, p)}
+      options={{
+        ...opts,
+        scales: {
+          ...opts.scales,
+          x: { ...opts.scales.x, type: 'linear' },
         },
-      },
-      y: {
-        ...baseOptions.scales.y,
-        title: {
-          display: true,
-          text: yLabel,
-          color: '#64748b',
-          font: { size: 11, family: 'Inter, system-ui, sans-serif' },
-        },
-      },
-    },
-  };
-
-  if (chartType === 'line') {
-    return <Line data={buildLineData(caseData)} options={options} />;
-  }
-  if (chartType === 'bar') {
-    return <Bar data={buildBarData(caseData)} options={options} />;
-  }
-  if (chartType === 'scatter') {
-    return (
-      <Scatter
-        data={buildScatterData(caseData)}
-        options={{
-          ...options,
-          scales: {
-            ...options.scales,
-            x: {
-              ...options.scales.x,
-              type: 'linear',
-              title: {
-                display: true,
-                text: xLabel,
-                color: '#64748b',
-                font: { size: 11 },
-              },
-            },
-          },
-        }}
-      />
-    );
-  }
-  return <div className="text-text-muted text-center py-8">Jenis grafik tidak dikenali: {chartType}</div>;
+      }}
+    />
+  );
+  return <div style={{ textAlign: 'center', color: 'var(--color-text-3)', padding: '2rem' }}>Jenis grafik tidak dikenali: {caseData.chartType}</div>;
 }

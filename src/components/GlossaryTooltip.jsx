@@ -1,37 +1,58 @@
 import React, { useState } from 'react';
 import { getDefinition } from '../utils/glossary';
+import { useApp } from '../context/AppContext';
 
 export default function GlossaryTooltip({ term }) {
   const [visible, setVisible] = useState(false);
+  const { isDA, modeColor } = useApp();
   const entry = getDefinition(term);
-  if (!entry) return <span className="text-accent-da font-medium">{term}</span>;
+
+  if (!entry) return (
+    <span style={{ color: modeColor, fontWeight: 700, fontSize: '0.8rem' }}>{term}</span>
+  );
 
   return (
-    <span className="relative inline-block">
+    <span style={{ position: 'relative', display: 'inline-block' }}>
       <button
-        onClick={() => setVisible(!visible)}
-        className="text-accent-da underline decoration-dotted font-medium hover:text-blue-400 transition-colors cursor-help"
+        onClick={() => setVisible(v => !v)}
+        style={{
+          color: modeColor,
+          background: 'none', border: 'none',
+          textDecoration: 'underline',
+          textDecorationStyle: 'dotted',
+          fontWeight: 700, fontSize: '0.8rem',
+          cursor: 'help',
+          padding: 0,
+        }}
         title="Klik untuk definisi"
       >
         {term}
       </button>
+
       {visible && (
         <>
           <div
-            className="fixed inset-0 z-40"
+            style={{ position: 'fixed', inset: 0, zIndex: 40 }}
             onClick={() => setVisible(false)}
           />
-          <div className="absolute z-50 bottom-full mb-2 left-0 w-72 bg-surface-2 border border-border rounded-xl shadow-2xl p-3 text-sm">
-            <div className="flex items-start justify-between gap-2">
-              <p className="font-bold text-text-primary">{entry.term}</p>
+          <div style={{
+            position: 'absolute', zIndex: 50,
+            bottom: '100%', left: 0, marginBottom: 8,
+            width: 280,
+            background: 'var(--color-bg-card)',
+            border: `1.5px solid ${modeColor}40`,
+            borderRadius: 14,
+            padding: '0.875rem',
+            boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+          }} className="anim-scale-in">
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
+              <span style={{ fontWeight: 800, fontSize: '0.85rem', color: modeColor }}>{entry.term}</span>
               <button
                 onClick={() => setVisible(false)}
-                className="text-text-muted hover:text-text-primary text-lg leading-none mt-[-2px]"
-              >
-                ×
-              </button>
+                style={{ background: 'none', border: 'none', color: 'var(--color-text-3)', fontSize: '1rem', cursor: 'pointer', lineHeight: 1 }}
+              >×</button>
             </div>
-            <p className="text-text-secondary mt-1 leading-relaxed">{entry.def}</p>
+            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-2)', lineHeight: 1.6 }}>{entry.def}</p>
           </div>
         </>
       )}
